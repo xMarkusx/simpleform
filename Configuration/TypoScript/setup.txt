@@ -1,0 +1,39 @@
+plugin.tx_simpleform {
+	view {
+		templateRootPath = {$plugin.tx_simpleform.view.templateRootPath}
+		partialRootPath = {$plugin.tx_simpleform.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_simpleform.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_simpleform.persistence.storagePid}
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		# rewrittenPropertyMapper = 1
+	}
+}
+
+plugin.tx_simpleform._CSS_DEFAULT_STYLE (
+	textarea.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-simple-form table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-simple-form table th {
+		font-weight:bold;
+	}
+
+	.tx-simple-form table td {
+		vertical-align:top;
+	}
+)

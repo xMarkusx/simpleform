@@ -1,0 +1,14 @@
+plugin.tx_simpleform {
+	view {
+		# cat=plugin.tx_simpleform/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:simple_form/Resources/Private/Templates/
+		# cat=plugin.tx_simpleform/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:simple_form/Resources/Private/Partials/
+		# cat=plugin.tx_simpleform/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:simple_form/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_simpleform//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}
