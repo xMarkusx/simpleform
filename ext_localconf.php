@@ -7,10 +7,12 @@ if (!defined('TYPO3_MODE')) {
 	'TYPO3.' . $_EXTKEY,
 	'Simpleform',
 	array(
+		'Form' => 'displayForm',
 		
 	),
 	// non-cacheable actions
 	array(
+		'Form' => '',
 		
 	)
 );
