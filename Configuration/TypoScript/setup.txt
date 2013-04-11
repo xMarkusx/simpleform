@@ -11,29 +11,17 @@ plugin.tx_simpleform {
 		# uncomment the following line to enable the new Property Mapper.
 		# rewrittenPropertyMapper = 1
 	}
+
+	settings {
+	    validation {
+	        field1 {
+	            1 = alphanumeric
+	            2 = not_empty
+	        }
+
+	        field2 {
+	            1 = not_empty
+	        }
+	    }
+	}
 }
-
-plugin.tx_simpleform._CSS_DEFAULT_STYLE (
-	textarea.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
-
-	input.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
-
-	.tx-simple-form table {
-		border-collapse:separate;
-		border-spacing:10px;
-	}
-
-	.tx-simple-form table th {
-		font-weight:bold;
-	}
-
-	.tx-simple-form table td {
-		vertical-align:top;
-	}
-)
