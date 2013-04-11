@@ -34,14 +34,48 @@ namespace TYPO3\SimpleForm\Controller;
  */
 class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
-	/**
+    /**
+     * @var array
+     */
+    private $requestArguments;
+
+    /**
+     * @var \TYPO3\SimpleForm\Utility\Validation\Validator
+     * @inject
+     */
+    private $validator;
+
+    /**
+     * @var array
+     */
+    private $validationErrors;
+
+    /**
+     * initialize
+     */
+    public function initializeAction() {
+        $this->requestArguments = $this->request->getArguments();
+    }
+
+    /**
 	 * action displayForm
 	 *
 	 * @return void
 	 */
 	public function displayFormAction() {
-
+        $this->validate();
+        $this->view->assign('validationErrors', $this->validationErrors);
+        $this->view->assign('postData', $this->requestArguments['form']);
 	}
+
+    private function validate() {
+        if(!empty($this->requestArguments['form'])) {
+            $this->validator->setPostData($this->requestArguments['form']);
+            $this->validator->setValidationConfiguration($this->settings['validation']);
+            $this->validator->checkFormValues();
+            $this->validationErrors = $this->validator->getValidationErrors();
+        }
+    }
 
 }
 ?>
