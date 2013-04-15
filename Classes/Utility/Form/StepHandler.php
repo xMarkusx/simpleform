@@ -156,5 +156,15 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
     public function getDirection() {
         return $this->direction;
     }
+
+    /**
+     * @return bool
+     */
+    public function formIsOnLastStep() {
+        if($this->currentStep === $this->lastStepName) {
+            return true;
+        }
+        return false;
+    }
 }
 ?>
