@@ -45,19 +45,22 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
     private $formFieldName;
 
     /**
-     * @var array
+     * @var \TYPO3\SimpleForm\Utility\Validation\ValidationConfigurationHandler
+     * @inject
      */
-    private $validationConfiguration;
+    private $validationConfigurationHandler;
 
     /**
-     * @var array
+     * @var \TYPO3\SimpleForm\Utility\Validation\ValidationErrorHandler
+     * @inject
      */
-    private $postData;
+    private $validationErrorHandler;
 
     /**
-     * @var array
+     * @var \TYPO3\SimpleForm\Utility\Form\FormDataHandler
+     * @inject
      */
-    private $validationErrors;
+    private $formDataHandler;
 
     /**
      * @var \TYPO3\SimpleForm\Utility\Validation\ValidationFactory
@@ -66,16 +69,24 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
     private $validationFactory;
 
     /**
+     * @var bool
+     */
+    private $deactivateCheck = false;
+
+    /**
      * check form-values against typoscript validation configuration
      */
     public function checkFormValues() {
-        foreach($this->validationConfiguration as $formFieldName => $formField) {
-            $this->formFieldName = $formFieldName;
+        if(!$this->deactivateCheck) {
+            $validationConfiguration = $this->validationConfigurationHandler->getValidationConfigurationFromCurrentStep();
+            foreach($validationConfiguration as $formFieldName => $formField) {
+                $this->formFieldName = $formFieldName;
 
-            foreach($formField as $validationCode) {
-                $this->validationFactory->setValidationCode($validationCode);
-                $this->validation = $this->validationFactory->getValidation();
-                $this->checkValidation();
+                foreach($formField as $validationCode) {
+                    $this->validationFactory->setValidationCode($validationCode);
+                    $this->validation = $this->validationFactory->getValidation();
+                    $this->checkValidation();
+                }
             }
         }
     }
@@ -84,7 +95,7 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
      * check current validation
      */
     private function checkValidation() {
-        if(!$this->validation->checkValue($this->postData[$this->formFieldName])) {
+        if(!$this->validation->checkValue($this->formDataHandler->getFormValue($this->formFieldName))) {
             $this->addValidationError();
         }
     }
@@ -95,8 +106,9 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
     private function addValidationError() {
         $validationError = new ValidationError();
         $validationError->setValidation($this->validation);
-        $validationError->setValue($this->postData[$this->formFieldName]);
-        $this->validationErrors[] = $validationError;
+        $validationError->setFormValue($this->formDataHandler->getFormValue($this->formFieldName));
+        $validationError->setFormField($this->formFieldName);
+        $this->validationErrorHandler->addValidationError($validationError);
     }
 
     /**
@@ -114,20 +126,6 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
     }
 
     /**
-     * @param array $postData
-     */
-    public function setPostData($postData) {
-        $this->postData = $postData;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPostData() {
-        return $this->postData;
-    }
-
-    /**
      * @param \TYPO3\SimpleForm\Utility\Validation\AbstractValidation $validation
      */
     public function setValidation($validation) {
@@ -139,34 +137,6 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
      */
     public function getValidation() {
         return $this->validation;
-    }
-
-    /**
-     * @param array $validationConfiguration
-     */
-    public function setValidationConfiguration($validationConfiguration) {
-        $this->validationConfiguration = $validationConfiguration;
-    }
-
-    /**
-     * @return array
-     */
-    public function getValidationConfiguration() {
-        return $this->validationConfiguration;
-    }
-
-    /**
-     * @param array $validationErrors
-     */
-    public function setValidationErrors($validationErrors) {
-        $this->validationErrors = $validationErrors;
-    }
-
-    /**
-     * @return array
-     */
-    public function getValidationErrors() {
-        return $this->validationErrors;
     }
 
     /**
@@ -183,6 +153,18 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
         return $this->validationFactory;
     }
 
+    /**
+     * @param boolean $deactivateCheck
+     */
+    public function setDeactivateCheck($deactivateCheck) {
+        $this->deactivateCheck = $deactivateCheck;
+    }
 
+    /**
+     * @return boolean
+     */
+    public function getDeactivateCheck() {
+        return $this->deactivateCheck;
+    }
 }
 ?>

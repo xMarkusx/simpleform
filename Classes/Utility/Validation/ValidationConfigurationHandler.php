@@ -32,63 +32,35 @@ namespace TYPO3\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class ValidationError {
+class ValidationConfigurationHandler implements \TYPO3\CMS\Core\SingletonInterface {
 
     /**
-     * @var string
+     * @var \TYPO3\SimpleForm\Utility\Form\StepHandler
+     * @inject
      */
-    private $formField;
+    private $stepHandler;
 
     /**
-     * @var mixed
+     * @var array
      */
-    private $formValue;
+    private $typoScriptSettings;
 
-    /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\AbstractValidation
-     */
-    private $validation;
-
-    /**
-     * @param \TYPO3\SimpleForm\Utility\Validation\AbstractValidation $validation
-     */
-    public function setValidation($validation) {
-        $this->validation = $validation;
+    public function getValidationConfigurationFromCurrentStep() {
+        return $this->typoScriptSettings[$this->stepHandler->getCurrentStep()]['validation'];
     }
 
     /**
-     * @return \TYPO3\SimpleForm\Utility\Validation\AbstractValidation
+     * @param array $typoScriptSettings
      */
-    public function getValidation() {
-        return $this->validation;
+    public function setTypoScriptSettings($typoScriptSettings) {
+        $this->typoScriptSettings = $typoScriptSettings;
     }
 
     /**
-     * @param mixed $formField
+     * @return array
      */
-    public function setFormField($formField) {
-        $this->formField = $formField;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFormField() {
-        return $this->formField;
-    }
-
-    /**
-     * @param mixed $formValue
-     */
-    public function setFormValue($formValue) {
-        $this->formValue = $formValue;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFormValue() {
-        return $this->formValue;
+    public function getTypoScriptSettings() {
+        return $this->typoScriptSettings;
     }
 }
 ?>

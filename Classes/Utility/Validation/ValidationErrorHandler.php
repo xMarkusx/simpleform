@@ -32,63 +32,55 @@ namespace TYPO3\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class ValidationError {
+class ValidationErrorHandler implements \TYPO3\CMS\Core\SingletonInterface {
 
     /**
-     * @var string
+     * @var \TYPO3\SimpleForm\Utility\Form\StepHandler
+     * @inject
      */
-    private $formField;
+    private $stepHandler;
 
     /**
-     * @var mixed
+     * @var array
      */
-    private $formValue;
+    private $validationErrors;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\AbstractValidation
+     * @param array $validationErrors
      */
-    private $validation;
-
-    /**
-     * @param \TYPO3\SimpleForm\Utility\Validation\AbstractValidation $validation
-     */
-    public function setValidation($validation) {
-        $this->validation = $validation;
+    public function setValidationErrors($validationErrors) {
+        $this->validationErrors = $validationErrors;
     }
 
     /**
-     * @return \TYPO3\SimpleForm\Utility\Validation\AbstractValidation
+     * @return array
      */
-    public function getValidation() {
-        return $this->validation;
+    public function getValidationErrors() {
+        return $this->validationErrors;
     }
 
     /**
-     * @param mixed $formField
+     * @param \TYPO3\SimpleForm\Utility\Validation\ValidationError $validationError
      */
-    public function setFormField($formField) {
-        $this->formField = $formField;
+    public function addValidationError($validationError) {
+        $this->validationErrors[$this->stepHandler->getCurrentStep()][$validationError->getFormField()][] = $validationError;
     }
 
     /**
      * @return mixed
      */
-    public function getFormField() {
-        return $this->formField;
+    public function getValidationErrorsFromCurrentStep() {
+        return $this->validationErrors[$this->stepHandler->getCurrentStep()];
     }
 
     /**
-     * @param mixed $formValue
+     * @return bool
      */
-    public function setFormValue($formValue) {
-        $this->formValue = $formValue;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFormValue() {
-        return $this->formValue;
+    public function validationErrorsExists() {
+        if(empty($this->validationErrors)) {
+            return false;
+        }
+        return true;
     }
 }
 ?>

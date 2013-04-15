@@ -12,7 +12,7 @@ if (!defined('TYPO3_MODE')) {
 	),
 	// non-cacheable actions
 	array(
-		'Form' => '',
+		'Form' => 'displayForm',
 		
 	)
 );

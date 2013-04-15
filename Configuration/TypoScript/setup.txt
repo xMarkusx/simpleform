@@ -13,14 +13,25 @@ plugin.tx_simpleform {
 	}
 
 	settings {
-	    validation {
-	        field1 {
-	            1 = alphanumeric
-	            2 = not_empty
-	        }
+	    steps = step1, step2, step3
+	    step1 {
+            validation {
+                field1 {
+                    1 = alphanumeric
+                    2 = not_empty
+                }
 
-	        field2 {
-	            1 = not_empty
+                field2 {
+                    1 = not_empty
+                }
+            }
+	    }
+
+	    step2 {
+	        validation {
+	            field1 {
+	                1 = not_empty
+	            }
 	        }
 	    }
 	}
