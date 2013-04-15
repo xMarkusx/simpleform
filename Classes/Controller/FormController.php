@@ -131,6 +131,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 
     /**
      * validate formData of current step
+     * TODO: refactor, add possibility to add validations to previous-step direction
      */
     private function validate() {
         if($this->stepHandler->getDirection() === \TYPO3\SimpleForm\Utility\Form\StepHandler::GO_TO_PREVIOUS_STEP) {
