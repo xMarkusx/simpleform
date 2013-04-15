@@ -131,13 +131,5 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
     public function getFormDataFromCurrentStep() {
         return $this->gpData[$this->formPrefix][$this->stepHandler->getCurrentStep()];
     }
-
-    /**
-     * @param string $step
-     * @return array
-     */
-    public function getFormDataFromStep($step) {
-        return $this->gpData[$this->formPrefix][$step];
-    }
 }
 ?>
