@@ -35,9 +35,40 @@ namespace TYPO3\SimpleForm\Controller;
 class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
     /**
-     * @var array
+     * @var \TYPO3\SimpleForm\Utility\Form\FormDataHandler
+     * @inject
      */
-    private $requestArguments;
+    private $fomDataHandler;
+
+    /**
+     * @var \TYPO3\SimpleForm\Utility\Form\StepHandler
+     * @inject
+     */
+    private $stepHandler;
+
+    /**
+     * @var \TYPO3\SimpleForm\Utility\Validation\ValidationConfigurationHandler
+     * @inject
+     */
+    private $validationConfigurationHandler;
+
+    /**
+     * @var \TYPO3\SimpleForm\Utility\Validation\ValidationErrorHandler
+     * @inject
+     */
+    private $validationErrorHandler;
+
+    /**
+     * @var \TYPO3\SimpleForm\Utility\Session\SessionHandler
+     * @inject
+     */
+    private $sessionHandler;
+
+    /**
+     * @var \TYPO3\SimpleForm\Utility\Session\SessionDataHandler
+     * @inject
+     */
+    private $sessionDataHandler;
 
     /**
      * @var \TYPO3\SimpleForm\Utility\Validation\Validator
@@ -46,15 +77,43 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
     private $validator;
 
     /**
-     * @var array
-     */
-    private $validationErrors;
-
-    /**
      * initialize
      */
     public function initializeAction() {
-        $this->requestArguments = $this->request->getArguments();
+        $this->initializeFormDataHandler();
+        $this->initializeStepHandler();
+        $this->initializeValidationConfigurationHandler();
+        $this->initializeSessionHandler();
+    }
+
+    /**
+     * initialize formDataHandler
+     */
+    private function initializeFormDataHandler() {
+        $this->fomDataHandler->setFormPrefix('form');
+        $this->fomDataHandler->setGpData($this->request->getArguments());
+    }
+
+    /**
+     * initialize validationConfigurationHandler
+     */
+    private function initializeValidationConfigurationHandler() {
+        $this->validationConfigurationHandler->setTypoScriptSettings($this->settings);
+    }
+
+    /**
+     * initialize SessionHandler
+     */
+    private function initializeSessionHandler() {
+        $this->sessionHandler->setSessionDataStorageKey('simpleForm');
+    }
+
+    /**
+     * initialize StepHandler
+     */
+    private function initializeStepHandler() {
+        $this->stepHandler->setSteps($this->settings['steps']);
+        $this->stepHandler->initialize();
     }
 
     /**
@@ -63,19 +122,63 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 * @return void
 	 */
 	public function displayFormAction() {
-        $this->validate();
-        $this->view->assign('validationErrors', $this->validationErrors);
-        $this->view->assign('postData', $this->requestArguments['form']);
+        if($this->fomDataHandler->formDataExists()) {
+            $this->validate();
+        } else {
+            $this->stayOnCurrentStep();
+        }
 	}
 
+    /**
+     * validate formData of current step
+     */
     private function validate() {
-        if(!empty($this->requestArguments['form'])) {
-            $this->validator->setPostData($this->requestArguments['form']);
-            $this->validator->setValidationConfiguration($this->settings['validation']);
+        if($this->stepHandler->getDirection() === \TYPO3\SimpleForm\Utility\Form\StepHandler::GO_TO_PREVIOUS_STEP) {
+            $this->goToPreviousStep();
+            $this->validator->setDeactivateCheck(true);
+        } else {
             $this->validator->checkFormValues();
-            $this->validationErrors = $this->validator->getValidationErrors();
+            if($this->validationErrorHandler->validationErrorsExists()) {
+                $this->stayOnCurrentStepAfterFailedValidation();
+            } else {
+                $this->goToNextStep();
+            }
         }
     }
 
+    /**
+     * stay on current Step
+     */
+    private function stayOnCurrentStep() {
+        $this->view->assign('formData', $this->sessionDataHandler->getFormDataFromCurrentStep());
+        $this->view->assign('step', $this->stepHandler->getCurrentStep());
+    }
+
+    /**
+     * stay on current step after validation has failed
+     */
+    private function stayOnCurrentStepAfterFailedValidation() {
+        $this->view->assign('step', $this->stepHandler->getCurrentStep());
+        $this->view->assign('formData', $this->fomDataHandler->getFormDataFromCurrentStep());
+        $this->view->assign('validationErrors', $this->validationErrorHandler->getValidationErrorsFromCurrentStep());
+    }
+
+    /**
+     * go to next step
+     */
+    private function goToNextStep() {
+        $this->sessionDataHandler->storeFormDataFromCurrentStep($this->fomDataHandler->getFormDataFromCurrentStep());
+        $this->view->assign('formData', $this->sessionDataHandler->getFormDataFromStep($this->stepHandler->getNextStep()));
+        $this->view->assign('step', $this->stepHandler->getNextStep());
+    }
+
+    /**
+     * go to previous step
+     */
+    private function goToPreviousStep() {
+        $this->sessionDataHandler->storeFormDataFromCurrentStep($this->fomDataHandler->getFormDataFromCurrentStep());
+        $this->view->assign('formData', $this->sessionDataHandler->getFormDataFromStep($this->stepHandler->getPreviousStep()));
+        $this->view->assign('step', $this->stepHandler->getPreviousStep());
+    }
 }
 ?>

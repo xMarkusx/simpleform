@@ -1,14 +1,64 @@
 <f:layout name="Default" />
 <f:section name="main">
-    <ul>
-    <f:for each="{validationErrors}" as="validationError">
-        <li>{validationError.validation.validationCode}</li>
-    </f:for>
-    </ul>
+    <f:if condition="{0:step} == {0:'step1'}">
+    <p>STEP1</p>
     <f:form action="displayForm" method="post">
-        <f:form.textfield name="form[field1]"></f:form.textfield>
-        <f:form.textfield name="form[field2]"></f:form.textfield>
-        <f:form.textfield name="form[field3]"></f:form.textfield>
+        <f:form.hidden name="currentStep" value="{step}" />
+        <f:form.textfield name="form[step1][field1]" value="{formData.field1}" />
+            <f:for each="{validationErrors.field1}" as="validationError">
+                <p>{validationError.validation.validationCode}</p>
+            </f:for>
+        <f:form.textfield name="form[step1][field2]" value="{formData.field2}" />
+            <f:for each="{validationErrors.field2}" as="validationError">
+                <p>{validationError.validation.validationCode}</p>
+            </f:for>
+        <f:form.textfield name="form[step1][field3]" value="{formData.field3}" />
+            <f:for each="{validationErrors.field3}" as="validationError">
+                <p>{validationError.validation.validationCode}</p>
+            </f:for>
         <f:form.submit name="submit" value="send"></f:form.submit>
     </f:form>
+    </f:if>
+
+    <f:if condition="{0:step} == {0:'step2'}">
+        <p>STEP2</p>
+        <f:form action="displayForm" method="post">
+            <f:form.hidden name="currentStep" value="{step}" />
+            <f:form.textfield name="form[step2][field1]" value="{formData.field1}" />
+            <f:for each="{validationErrors.field1}" as="validationError">
+                <p>{validationError.validation.validationCode}</p>
+            </f:for>
+            <f:form.textfield name="form[step2][field2]" value="{formData.field2}" />
+            <f:for each="{validationErrors.field2}" as="validationError">
+                <p>{validationError.validation.validationCode}</p>
+            </f:for>
+            <f:form.textfield name="form[step2][field3]" value="{formData.field3}" />
+            <f:for each="{validationErrors.field3}" as="validationError">
+                <p>{validationError.validation.validationCode}</p>
+            </f:for>
+            <f:form.submit name="submit" value="send"></f:form.submit>
+            <f:form.submit name="submit" value="back"></f:form.submit>
+        </f:form>
+    </f:if>
+
+    <f:if condition="{0:step} == {0:'step3'}">
+        <p>STEP3</p>
+        <f:form action="displayForm" method="post">
+            <f:form.hidden name="currentStep" value="{step}" />
+            <f:form.textfield name="form[step3][field1]" value="{formData.field1}" />
+            <f:for each="{validationErrors.field1}" as="validationError">
+                <p>{validationError.validation.validationCode}</p>
+            </f:for>
+            <f:form.textfield name="form[step3][field2]" value="{formData.field2}" />
+            <f:for each="{validationErrors.field2}" as="validationError">
+                <p>{validationError.validation.validationCode}</p>
+            </f:for>
+            <f:form.textfield name="form[step3][field3]" value="{formData.field3}" />
+            <f:for each="{validationErrors.field3}" as="validationError">
+                <p>{validationError.validation.validationCode}</p>
+            </f:for>
+            <f:form.submit name="submit" value="send"></f:form.submit>
+            <f:form.submit name="submit" value="back"></f:form.submit>
+        </f:form>
+    </f:if>
 </f:section>
