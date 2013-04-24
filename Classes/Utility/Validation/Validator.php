@@ -105,7 +105,7 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
      */
     private function addValidationError() {
         $validationError = new ValidationError();
-        $validationError->setValidation($this->validation);
+        $validationError->setValidationCode($this->validation->getValidationCode());
         $validationError->setFormValue($this->formDataHandler->getFormValue($this->formFieldName));
         $validationError->setFormField($this->formFieldName);
         $this->validationErrorHandler->addValidationError($validationError);

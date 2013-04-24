@@ -45,23 +45,9 @@ class ValidationError {
     private $formValue;
 
     /**
-     * @var \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation
+     * @var string
      */
-    private $validation;
-
-    /**
-     * @param \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation $validation
-     */
-    public function setValidation($validation) {
-        $this->validation = $validation;
-    }
-
-    /**
-     * @return \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation
-     */
-    public function getValidation() {
-        return $this->validation;
-    }
+    private $validationCode;
 
     /**
      * @param mixed $formField
@@ -89,6 +75,20 @@ class ValidationError {
      */
     public function getFormValue() {
         return $this->formValue;
+    }
+
+    /**
+     * @param string $validationCode
+     */
+    public function setValidationCode($validationCode) {
+        $this->validationCode = $validationCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValidationCode() {
+        return $this->validationCode;
     }
 }
 ?>
