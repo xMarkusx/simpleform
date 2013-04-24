@@ -2,39 +2,69 @@
 <f:section name="main">
     <f:if condition="{0:step} == {0:'step1'}">
     <p>STEP1</p>
-    <f:form action="displayForm" method="post">
+    <f:form action="displayForm" method="post" enctype="multipart/form-data">
         <f:form.hidden name="currentStep" value="{step}" />
         <f:form.textfield name="form[step1][field1]" value="{formData.field1}" />
             <f:for each="{validationErrors.field1}" as="validationError">
-                <p>{validationError.validation.validationCode}</p>
+                <p>{validationError.validationCode}</p>
             </f:for>
         <f:form.textfield name="form[step1][field2]" value="{formData.field2}" />
             <f:for each="{validationErrors.field2}" as="validationError">
-                <p>{validationError.validation.validationCode}</p>
+                <p>{validationError.validationCode}</p>
             </f:for>
         <f:form.textfield name="form[step1][field3]" value="{formData.field3}" />
             <f:for each="{validationErrors.field3}" as="validationError">
-                <p>{validationError.validation.validationCode}</p>
+                <p>{validationError.validationCode}</p>
             </f:for>
+        <f:if condition="{formData.upload1.name}">
+            <f:then>
+                {formData.upload1.name}
+                <f:form.hidden name="form[step1][upload1][name]" value="{formData.upload1.name}" />
+                <f:form.hidden name="form[step1][upload1][type]" value="{formData.upload1.type}" />
+                <f:form.hidden name="form[step1][upload1][tmp_name]" value="{formData.upload1.tmp_name}" />
+                <f:form.hidden name="form[step1][upload1][size]" value="{formData.upload1.size}" />
+            </f:then>
+            <f:else>
+                <f:for each="{validationErrors.upload1}" as="validationError">
+                    <p>{validationError.validationCode}</p>
+                </f:for>
+                <f:form.upload name="form[step1][upload1]" value="{formData.upload1}"/>
+            </f:else>
+        </f:if>
+        <f:if condition="{formData.upload2.name}">
+            <f:then>
+                {formData.upload2.name}
+                <f:form.hidden name="form[step1][upload2][name]" value="{formData.upload2.name}" />
+                <f:form.hidden name="form[step1][upload2][type]" value="{formData.upload2.type}" />
+                <f:form.hidden name="form[step1][upload2][tmp_name]" value="{formData.upload2.tmp_name}" />
+                <f:form.hidden name="form[step1][upload2][size]" value="{formData.upload2.size}" />
+            </f:then>
+            <f:else>
+                <f:for each="{validationErrors.upload2}" as="validationError">
+                    <p>{validationError.validationCode}</p>
+                </f:for>
+                <f:form.upload name="form[step1][upload2]" value="{formData.upload2}"/>
+            </f:else>
+        </f:if>
         <f:form.submit name="submit" value="send"></f:form.submit>
     </f:form>
     </f:if>
 
     <f:if condition="{0:step} == {0:'step2'}">
         <p>STEP2</p>
-        <f:form action="displayForm" method="post">
+        <f:form action="displayForm" method="post" enctype="multipart/form-data">
             <f:form.hidden name="currentStep" value="{step}" />
             <f:form.textfield name="form[step2][field1]" value="{formData.field1}" />
             <f:for each="{validationErrors.field1}" as="validationError">
-                <p>{validationError.validation.validationCode}</p>
+                <p>{validationError.validationCode}</p>
             </f:for>
             <f:form.textfield name="form[step2][field2]" value="{formData.field2}" />
             <f:for each="{validationErrors.field2}" as="validationError">
-                <p>{validationError.validation.validationCode}</p>
+                <p>{validationError.validationCode}</p>
             </f:for>
             <f:form.textfield name="form[step2][field3]" value="{formData.field3}" />
             <f:for each="{validationErrors.field3}" as="validationError">
-                <p>{validationError.validation.validationCode}</p>
+                <p>{validationError.validationCode}</p>
             </f:for>
             <f:form.submit name="submit" value="send"></f:form.submit>
             <f:form.submit name="submit" value="back"></f:form.submit>
@@ -43,19 +73,19 @@
 
     <f:if condition="{0:step} == {0:'step3'}">
         <p>STEP3</p>
-        <f:form action="displayForm" method="post">
+        <f:form action="displayForm" method="post" enctype="multipart/form-data">
             <f:form.hidden name="currentStep" value="{step}" />
             <f:form.textfield name="form[step3][field1]" value="{formData.field1}" />
             <f:for each="{validationErrors.field1}" as="validationError">
-                <p>{validationError.validation.validationCode}</p>
+                <p>{validationError.validationCode}</p>
             </f:for>
             <f:form.textfield name="form[step3][field2]" value="{formData.field2}" />
             <f:for each="{validationErrors.field2}" as="validationError">
-                <p>{validationError.validation.validationCode}</p>
+                <p>{validationError.validationCode}</p>
             </f:for>
             <f:form.textfield name="form[step3][field3]" value="{formData.field3}" />
             <f:for each="{validationErrors.field3}" as="validationError">
-                <p>{validationError.validation.validationCode}</p>
+                <p>{validationError.validationCode}</p>
             </f:for>
             <f:form.submit name="submit" value="send"></f:form.submit>
             <f:form.submit name="submit" value="back"></f:form.submit>
