@@ -77,6 +77,12 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
     private $validator;
 
     /**
+     * @var \TYPO3\SimpleForm\Interceptor\InterceptorHandler
+     * @inject
+     */
+    private $interceptorHandler;
+
+    /**
      * initialize
      */
     public function initializeAction() {
@@ -84,6 +90,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->initializeStepHandler();
         $this->initializeValidationConfigurationHandler();
         $this->initializeSessionHandler();
+        $this->initializeInterceptorHandler();
     }
 
     /**
@@ -117,6 +124,14 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
     }
 
     /**
+     * initialize InterceptorHandler
+     */
+    private function initializeInterceptorHandler() {
+        $this->interceptorHandler->setInterceptorsConfiguration($this->settings[$this->stepHandler->getCurrentStep()]['interceptors']);
+        $this->interceptorHandler->createInterceptorsFromInterceptorsConfiguration();
+    }
+
+    /**
 	 * action displayForm
 	 *
 	 * @return void
@@ -142,7 +157,12 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
             if($this->validationErrorHandler->validationErrorsExists()) {
                 $this->stayOnCurrentStepAfterFailedValidation();
             } else {
-                $this->goToNextStep();
+                $this->interceptorHandler->callAllInterceptors();
+                if($this->validationErrorHandler->validationErrorsExists()) {
+                    $this->stayOnCurrentStepAfterFailedValidation();
+                } else {
+                    $this->goToNextStep();
+                }
             }
         }
     }

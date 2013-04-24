@@ -25,6 +25,29 @@ plugin.tx_simpleform {
                     1 = not_empty
                 }
             }
+
+            interceptors {
+                1 {
+                    interceptor = TYPO3\SimpleForm\Interceptor\FileUploadInterceptor
+                    conf {
+                        uploadFolder = fileadmin/
+                        files {
+                            #1 = form,step1,upload
+                            1 {
+                                formName = upload1
+                                allowedMimeTypes = image/png,application/pdf,application/msword,image/gif,image/jpeg
+                                maxSize = 614400
+                                required = 1
+                            }
+                            2 {
+                                formName = upload2
+                                allowedMimeTypes = image/png,application/pdf,application/msword,image/gif,image/jpeg
+                                maxSize = 614400
+                            }
+                        }
+                    }
+                }
+            }
 	    }
 
 	    step2 {
