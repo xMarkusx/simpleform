@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Utility\Validation;
+namespace CosmoCode\SimpleForm\Utility\Validation;
 
     /***************************************************************
      *  Copyright notice
@@ -40,7 +40,7 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
     private $validationCode;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\AbstractValidation
+     * @var \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation
      */
     private $validation;
 
@@ -49,24 +49,24 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
      */
     private function defineValidationType() {
         switch($this->validationCode) {
-            case \TYPO3\SimpleForm\Utility\Validation\IsNotEmptyValidation::VALIDATION_CODE:
+            case \CosmoCode\SimpleForm\Utility\Validation\IsNotEmptyValidation::VALIDATION_CODE:
                 $this->validation = new IsNotEmptyValidation();
                 break;
-            case \TYPO3\SimpleForm\Utility\Validation\IsAlphanumericValidation::VALIDATION_CODE:
+            case \CosmoCode\SimpleForm\Utility\Validation\IsAlphanumericValidation::VALIDATION_CODE:
                 $this->validation = new IsAlphanumericValidation();
                 break;
         }
     }
 
     /**
-     * @param \TYPO3\SimpleForm\Utility\Validation\AbstractValidation $validation
+     * @param \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation $validation
      */
     public function setValidation($validation) {
         $this->validation = $validation;
     }
 
     /**
-     * @return \TYPO3\SimpleForm\Utility\Validation\AbstractValidation
+     * @return \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation
      */
     public function getValidation() {
         return $this->validation;

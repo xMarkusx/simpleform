@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Utility\Validation;
+namespace CosmoCode\SimpleForm\Utility\Validation;
 
     /***************************************************************
      *  Copyright notice
@@ -35,7 +35,7 @@ namespace TYPO3\SimpleForm\Utility\Validation;
 class ValidationConfigurationHandler implements \TYPO3\CMS\Core\SingletonInterface {
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Form\StepHandler
+     * @var \CosmoCode\SimpleForm\Utility\Form\StepHandler
      * @inject
      */
     private $stepHandler;

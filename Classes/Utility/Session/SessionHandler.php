@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Utility\Session;
+namespace CosmoCode\SimpleForm\Utility\Session;
 
     /***************************************************************
      *  Copyright notice

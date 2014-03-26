@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Utility\Session;
+namespace CosmoCode\SimpleForm\Utility\Session;
 
     /***************************************************************
      *  Copyright notice
@@ -35,13 +35,13 @@ namespace TYPO3\SimpleForm\Utility\Session;
 class SessionDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Session\SessionHandler
+     * @var \CosmoCode\SimpleForm\Utility\Session\SessionHandler
      * @inject
      */
     private $sessionHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Form\StepHandler
+     * @var \CosmoCode\SimpleForm\Utility\Form\StepHandler
      * @inject
      */
     private $stepHandler;

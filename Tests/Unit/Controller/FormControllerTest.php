@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Tests;
+namespace CosmoCode\SimpleForm\Tests;
 /***************************************************************
  *  Copyright notice
  *
@@ -43,7 +43,7 @@ class FormControllerTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new \TYPO3\SimpleForm\Domain\Model\Form();
+		$this->fixture = new \CosmoCode\SimpleForm\Domain\Model\Form();
 	}
 
 	public function tearDown() {

@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Utility\Form;
+namespace CosmoCode\SimpleForm\Utility\Form;
 
 /***************************************************************
 *  Copyright notice
@@ -45,7 +45,7 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
     private $formDataIsManipulated = false;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Form\StepHandler
+     * @var \CosmoCode\SimpleForm\Utility\Form\StepHandler
      * @inject
      */
     private $stepHandler;

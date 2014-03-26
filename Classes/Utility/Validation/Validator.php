@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Utility\Validation;
+namespace CosmoCode\SimpleForm\Utility\Validation;
 
     /***************************************************************
      *  Copyright notice
@@ -35,7 +35,7 @@ namespace TYPO3\SimpleForm\Utility\Validation;
 class Validator implements \TYPO3\CMS\Core\SingletonInterface {
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\AbstractValidation
+     * @var \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation
      */
     private $validation;
 
@@ -45,25 +45,25 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
     private $formFieldName;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\ValidationConfigurationHandler
+     * @var \CosmoCode\SimpleForm\Utility\Validation\ValidationConfigurationHandler
      * @inject
      */
     private $validationConfigurationHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\ValidationErrorHandler
+     * @var \CosmoCode\SimpleForm\Utility\Validation\ValidationErrorHandler
      * @inject
      */
     private $validationErrorHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Form\FormDataHandler
+     * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
      * @inject
      */
     private $formDataHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\ValidationFactory
+     * @var \CosmoCode\SimpleForm\Utility\Validation\ValidationFactory
      * @inject
      */
     private $validationFactory;
@@ -126,28 +126,28 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
     }
 
     /**
-     * @param \TYPO3\SimpleForm\Utility\Validation\AbstractValidation $validation
+     * @param \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation $validation
      */
     public function setValidation($validation) {
         $this->validation = $validation;
     }
 
     /**
-     * @return \TYPO3\SimpleForm\Utility\Validation\AbstractValidation
+     * @return \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation
      */
     public function getValidation() {
         return $this->validation;
     }
 
     /**
-     * @param \TYPO3\SimpleForm\Utility\Validation\ValidationFactory $validationFactory
+     * @param \CosmoCode\SimpleForm\Utility\Validation\ValidationFactory $validationFactory
      */
     public function setValidationFactory($validationFactory) {
         $this->validationFactory = $validationFactory;
     }
 
     /**
-     * @return \TYPO3\SimpleForm\Utility\Validation\ValidationFactory
+     * @return \CosmoCode\SimpleForm\Utility\Validation\ValidationFactory
      */
     public function getValidationFactory() {
         return $this->validationFactory;

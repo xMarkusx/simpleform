@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Utility\Form;
+namespace CosmoCode\SimpleForm\Utility\Form;
 
     /***************************************************************
      *  Copyright notice
@@ -63,7 +63,7 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
     private $direction;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Form\FormDataHandler
+     * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
      * @inject
      */
     private $fomDataHandler;

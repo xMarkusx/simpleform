@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Utility\Validation;
+namespace CosmoCode\SimpleForm\Utility\Validation;
 
     /***************************************************************
      *  Copyright notice
@@ -45,19 +45,19 @@ class ValidationError {
     private $formValue;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\AbstractValidation
+     * @var \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation
      */
     private $validation;
 
     /**
-     * @param \TYPO3\SimpleForm\Utility\Validation\AbstractValidation $validation
+     * @param \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation $validation
      */
     public function setValidation($validation) {
         $this->validation = $validation;
     }
 
     /**
-     * @return \TYPO3\SimpleForm\Utility\Validation\AbstractValidation
+     * @return \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation
      */
     public function getValidation() {
         return $this->validation;

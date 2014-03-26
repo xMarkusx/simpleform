@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Utility\Validation;
+namespace CosmoCode\SimpleForm\Utility\Validation;
 
     /***************************************************************
      *  Copyright notice

@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Controller;
+namespace CosmoCode\SimpleForm\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -35,43 +35,43 @@ namespace TYPO3\SimpleForm\Controller;
 class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Form\FormDataHandler
+     * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
      * @inject
      */
     private $fomDataHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Form\StepHandler
+     * @var \CosmoCode\SimpleForm\Utility\Form\StepHandler
      * @inject
      */
     private $stepHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\ValidationConfigurationHandler
+     * @var \CosmoCode\SimpleForm\Utility\Validation\ValidationConfigurationHandler
      * @inject
      */
     private $validationConfigurationHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\ValidationErrorHandler
+     * @var \CosmoCode\SimpleForm\Utility\Validation\ValidationErrorHandler
      * @inject
      */
     private $validationErrorHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Session\SessionHandler
+     * @var \CosmoCode\SimpleForm\Utility\Session\SessionHandler
      * @inject
      */
     private $sessionHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Session\SessionDataHandler
+     * @var \CosmoCode\SimpleForm\Utility\Session\SessionDataHandler
      * @inject
      */
     private $sessionDataHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\Validator
+     * @var \CosmoCode\SimpleForm\Utility\Validation\Validator
      * @inject
      */
     private $validator;
@@ -134,7 +134,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      * TODO: refactor, add possibility to add validations to previous-step direction
      */
     private function validate() {
-        if($this->stepHandler->getDirection() === \TYPO3\SimpleForm\Utility\Form\StepHandler::GO_TO_PREVIOUS_STEP) {
+        if($this->stepHandler->getDirection() === \CosmoCode\SimpleForm\Utility\Form\StepHandler::GO_TO_PREVIOUS_STEP) {
             $this->goToPreviousStep();
             $this->validator->setDeactivateCheck(true);
         } else {

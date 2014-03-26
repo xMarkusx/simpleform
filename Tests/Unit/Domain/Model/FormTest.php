@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\SimpleForm\Tests;
+namespace CosmoCode\SimpleForm\Tests;
 /***************************************************************
  *  Copyright notice
  *
@@ -26,7 +26,7 @@ namespace TYPO3\SimpleForm\Tests;
  ***************************************************************/
 
 /**
- * Test case for class \TYPO3\SimpleForm\Domain\Model\Form.
+ * Test case for class \CosmoCode\SimpleForm\Domain\Model\Form.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -39,12 +39,12 @@ namespace TYPO3\SimpleForm\Tests;
  */
 class FormTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	/**
-	 * @var \TYPO3\SimpleForm\Domain\Model\Form
+	 * @var \CosmoCode\SimpleForm\Domain\Model\Form
 	 */
 	protected $fixture;
 
 	public function setUp() {
-		$this->fixture = new \TYPO3\SimpleForm\Domain\Model\Form();
+		$this->fixture = new \CosmoCode\SimpleForm\Domain\Model\Form();
 	}
 
 	public function tearDown() {
