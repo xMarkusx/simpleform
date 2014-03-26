@@ -14,6 +14,7 @@ plugin.tx_simpleform {
 
 	settings {
 	    steps = step1, step2, step3
+
 	    step1 {
             validation {
                 field1 {
@@ -54,6 +55,16 @@ plugin.tx_simpleform {
 	        validation {
 	            field1 {
 	                1 = not_empty
+	            }
+	        }
+	    }
+
+	    finisher {
+	        1 {
+	            finisher = TYPO3\SimpleForm\Finisher\FooBarFinisher
+	            conf {
+	                lorem = ipsum
+	                foo = bar
 	            }
 	        }
 	    }

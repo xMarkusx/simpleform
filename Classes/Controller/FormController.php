@@ -83,6 +83,12 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
     private $interceptorHandler;
 
     /**
+     * @var \TYPO3\SimpleForm\Finisher\FinisherHandler
+     * @inject
+     */
+    private $finisherHandler;
+
+    /**
      * initialize
      */
     public function initializeAction() {
@@ -91,6 +97,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->initializeValidationConfigurationHandler();
         $this->initializeSessionHandler();
         $this->initializeInterceptorHandler();
+        $this->initializeFinisherHandler();
     }
 
     /**
@@ -132,6 +139,14 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
     }
 
     /**
+     * initialize FinisherHandler
+     */
+    private function initializeFinisherHandler() {
+        $this->finisherHandler->setFinishersConfiguration($this->settings['finisher']);
+        $this->finisherHandler->createFinishersFromFinishersConfiguration();
+    }
+
+    /**
 	 * action displayForm
 	 *
 	 * @return void
@@ -161,10 +176,21 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
                 if($this->validationErrorHandler->validationErrorsExists()) {
                     $this->stayOnCurrentStepAfterFailedValidation();
                 } else {
-                    $this->goToNextStep();
+                    if($this->stepHandler->formIsOnLastStep()) {
+                        $this->callFinisher();
+                    } else {
+                        $this->goToNextStep();
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * call all Finishers
+     */
+    private function callFinisher() {
+        $this->finisherHandler->callAllFinishers();
     }
 
     /**
