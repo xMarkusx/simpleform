@@ -66,7 +66,7 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
      * @inject
      */
-    private $fomDataHandler;
+    private $formDataHandler;
 
     public function initialize() {
         $this->defineCurrentStep();
@@ -74,7 +74,7 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
     }
 
     private function defineCurrentStep() {
-        $gpData = $this->fomDataHandler->getGpData();
+        $gpData = $this->formDataHandler->getGpData();
         if(!empty($gpData['currentStep'])) {
             $this->currentStep = $gpData['currentStep'];
         } else {
@@ -83,10 +83,10 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
     }
 
     private function defineDirection() {
-        $gpData = $this->fomDataHandler->getGpData();
+        $gpData = $this->formDataHandler->getGpData();
         $this->direction = self::GO_TO_NEXT_STEP;
 
-        if($gpData['submit'] === 'back') {
+        if(isset($gpData['back'])) {
             $this->direction = self::GO_TO_PREVIOUS_STEP;
         }
     }

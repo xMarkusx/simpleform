@@ -38,7 +38,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
      * @inject
      */
-    private $fomDataHandler;
+    private $formDataHandler;
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Form\StepHandler
@@ -104,8 +104,8 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      * initialize formDataHandler
      */
     private function initializeFormDataHandler() {
-        $this->fomDataHandler->setFormPrefix('form');
-        $this->fomDataHandler->setGpData($this->request->getArguments());
+        $this->formDataHandler->setFormPrefix($this->settings['formPrefix']);
+        $this->formDataHandler->setGpData($this->request->getArguments());
     }
 
     /**
@@ -152,7 +152,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 * @return void
 	 */
 	public function displayFormAction() {
-        if($this->fomDataHandler->formDataExists()) {
+        if($this->formDataHandler->formDataExists()) {
             $this->validate();
         } else {
             $this->stayOnCurrentStep();
@@ -206,7 +206,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      */
     private function stayOnCurrentStepAfterFailedValidation() {
         $this->view->assign('step', $this->stepHandler->getCurrentStep());
-        $this->view->assign('formData', $this->fomDataHandler->getFormDataFromCurrentStep());
+        $this->view->assign('formData', $this->formDataHandler->getFormDataFromCurrentStep());
         $this->view->assign('validationErrors', $this->validationErrorHandler->getValidationErrorsFromCurrentStep());
     }
 
@@ -214,7 +214,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      * go to next step
      */
     private function goToNextStep() {
-        $this->sessionDataHandler->storeFormDataFromCurrentStep($this->fomDataHandler->getFormDataFromCurrentStep());
+        $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
         $this->view->assign('formData', $this->sessionDataHandler->getFormDataFromStep($this->stepHandler->getNextStep()));
         $this->view->assign('step', $this->stepHandler->getNextStep());
     }
@@ -223,7 +223,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      * go to previous step
      */
     private function goToPreviousStep() {
-        $this->sessionDataHandler->storeFormDataFromCurrentStep($this->fomDataHandler->getFormDataFromCurrentStep());
+        $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
         $this->view->assign('formData', $this->sessionDataHandler->getFormDataFromStep($this->stepHandler->getPreviousStep()));
         $this->view->assign('step', $this->stepHandler->getPreviousStep());
     }
