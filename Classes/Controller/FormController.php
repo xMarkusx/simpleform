@@ -178,6 +178,8 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
                 } else {
                     if($this->stepHandler->formIsOnLastStep()) {
                         $this->callFinisher();
+                        $this->view->assign('finished', 1);
+                        $this->view->assign('formData', $this->formDataHandler->getFormDataFromCurrentStep());
                     } else {
                         $this->goToNextStep();
                     }
