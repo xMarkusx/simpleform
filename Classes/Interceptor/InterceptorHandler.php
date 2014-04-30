@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Interceptor;
+namespace CosmoCode\SimpleForm\Interceptor;
 
     /***************************************************************
      *  Copyright notice

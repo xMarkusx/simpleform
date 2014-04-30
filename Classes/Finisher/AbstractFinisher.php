@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Finisher;
+namespace CosmoCode\SimpleForm\Finisher;
 
     /***************************************************************
      *  Copyright notice
@@ -35,7 +35,7 @@ namespace TYPO3\SimpleForm\Finisher;
 abstract class AbstractFinisher {
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Form\FormDataHandler
+     * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
      * @inject
      */
     protected $formDataHandler;

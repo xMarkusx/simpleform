@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Finisher;
+namespace CosmoCode\SimpleForm\Finisher;
 
     /***************************************************************
      *  Copyright notice

@@ -77,13 +77,13 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
     private $validator;
 
     /**
-     * @var \TYPO3\SimpleForm\Interceptor\InterceptorHandler
+     * @var \CosmoCode\SimpleForm\Interceptor\InterceptorHandler
      * @inject
      */
     private $interceptorHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Finisher\FinisherHandler
+     * @var \CosmoCode\SimpleForm\Finisher\FinisherHandler
      * @inject
      */
     private $finisherHandler;

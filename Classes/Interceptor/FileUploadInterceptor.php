@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Interceptor;
+namespace CosmoCode\SimpleForm\Interceptor;
 
     /***************************************************************
      *  Copyright notice
@@ -156,7 +156,7 @@ class FileUploadInterceptor extends AbstractInterceptor {
      * @param string $validationCode
      */
     private function addFileErrorToValidationErrors($validationCode) {
-        $validationError = new \TYPO3\SimpleForm\Utility\Validation\ValidationError();
+        $validationError = new \CosmoCode\SimpleForm\Utility\Validation\ValidationError();
         $validationError->setFormField($this->currentFileConfiguration['formName']);
         $validationError->setValidationCode($validationCode);
         $this->validationErrorHandler->addValidationError($validationError);

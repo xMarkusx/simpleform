@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\SimpleForm\Interceptor;
+namespace CosmoCode\SimpleForm\Interceptor;
 
     /***************************************************************
      *  Copyright notice
@@ -35,13 +35,13 @@ namespace TYPO3\SimpleForm\Interceptor;
 abstract class AbstractInterceptor {
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Validation\ValidationErrorHandler
+     * @var \CosmoCode\SimpleForm\Utility\Validation\ValidationErrorHandler
      * @inject
      */
     protected $validationErrorHandler;
 
     /**
-     * @var \TYPO3\SimpleForm\Utility\Form\FormDataHandler
+     * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
      * @inject
      */
     protected $formDataHandler;
