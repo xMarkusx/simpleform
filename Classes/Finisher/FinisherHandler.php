@@ -71,6 +71,9 @@ class FinisherHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * call finish function of all configured finishers
      */
     public function callAllFinishers() {
+		if(empty($this->finishers)) {
+			return 0;
+		}
         foreach($this->finishers as $finisher) {
             /** @var $finisher AbstractFinisher */
             $finisher->finish();

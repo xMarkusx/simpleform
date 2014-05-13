@@ -71,6 +71,9 @@ class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * call finish function of all configured interceptors
      */
     public function callAllInterceptors() {
+		if(empty($this->interceptors)) {
+			return 0;
+		}
         foreach($this->interceptors as $interceptor) {
             /** @var $interceptor AbstractInterceptor */
             $interceptor->intercept();

@@ -77,8 +77,8 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
      * check form-values against typoscript validation configuration
      */
     public function checkFormValues() {
-        if(!$this->deactivateCheck) {
-            $validationConfiguration = $this->validationConfigurationHandler->getValidationConfigurationFromCurrentStep();
+		$validationConfiguration = $this->validationConfigurationHandler->getValidationConfigurationFromCurrentStep();
+        if(!$this->deactivateCheck && $validationConfiguration) {
             foreach($validationConfiguration as $formFieldName => $formField) {
                 $this->formFieldName = $formFieldName;
 
