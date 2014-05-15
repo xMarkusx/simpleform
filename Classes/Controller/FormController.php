@@ -88,6 +88,12 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      */
     private $finisherHandler;
 
+	/**
+	 * @var \CosmoCode\SimpleForm\PreProcessor\PreProcessorHandler
+	 * @inject
+	 */
+	private $preProcessorHandler;
+
     /**
      * initialize
      */
@@ -98,6 +104,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->initializeSessionHandler();
         $this->initializeInterceptorHandler();
         $this->initializeFinisherHandler();
+		$this->initializePreProcessorHandler();
     }
 
     /**
@@ -146,8 +153,17 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->finisherHandler->createFinishersFromFinishersConfiguration();
     }
 
+	/**
+	 * initialize PreProcessorHandler
+	 */
+	private function initializePreProcessorHandler() {
+		$this->preProcessorHandler->setPreProcessorsConfiguration($this->settings[$this->stepHandler->getCurrentStep()]['preProcessors']);
+		$this->preProcessorHandler->createPreProcessorsFromPreProcessorsConfiguration();
+	}
+
     /**
 	 * action displayForm
+	 * TODO save next/previous step in session and make interntal redirect to displayFormAction
 	 *
 	 * @return void
 	 */
@@ -155,6 +171,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         if($this->formDataHandler->formDataExists()) {
             $this->validate();
         } else {
+			$this->preProcessorHandler->callAllPreProcessors();
             $this->stayOnCurrentStep();
         }
 	}
@@ -199,7 +216,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      * stay on current Step
      */
     private function stayOnCurrentStep() {
-        $this->view->assign('formData', $this->sessionDataHandler->getFormDataFromCurrentStep());
+		$this->populateFreshestFormData($this->sessionDataHandler->getFormDataFromCurrentStep(), $this->formDataHandler->getFormDataFromCurrentStep());
         $this->view->assign('step', $this->stepHandler->getCurrentStep());
     }
 
@@ -229,5 +246,13 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->view->assign('formData', $this->sessionDataHandler->getFormDataFromStep($this->stepHandler->getPreviousStep()));
         $this->view->assign('step', $this->stepHandler->getPreviousStep());
     }
+
+	protected function populateFreshestFormData($sessionData, $formData) {
+		if($sessionData) {
+			$this->view->assign('formData', $sessionData);
+		} else {
+			$this->view->assign('formData', $formData);
+		}
+	}
 }
 ?>
