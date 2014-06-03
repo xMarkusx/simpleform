@@ -55,6 +55,7 @@ class FinisherHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * TODO: write log if exception appears
      */
     public function createFinishersFromFinishersConfiguration() {
+		$this->resetFinishers();
         foreach($this->finishersConfiguration as $singleFinisherConfiguration) {
             /** @var $finisher AbstractFinisher */
             try {
@@ -93,5 +94,9 @@ class FinisherHandler implements \TYPO3\CMS\Core\SingletonInterface {
     public function getFinishersConfiguration() {
         return $this->finishersConfiguration;
     }
+
+	private function resetFinishers() {
+		$this->finishers = array();
+	}
 }
 ?>

@@ -168,12 +168,18 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	 * @return void
 	 */
 	public function displayFormAction() {
-        if($this->formDataHandler->formDataExists()) {
-            $this->validate();
-        } else {
+		$gpData = $this->formDataHandler->getGpData();
+		if(empty($gpData['formPrefix']) || $gpData['formPrefix'] == $this->formDataHandler->getFormPrefix()) {
+			if($this->formDataHandler->formDataExists()) {
+				$this->validate();
+			} else {
+				$this->preProcessorHandler->callAllPreProcessors();
+				$this->stayOnCurrentStep();
+			}
+		} else {
 			$this->preProcessorHandler->callAllPreProcessors();
-            $this->stayOnCurrentStep();
-        }
+			$this->stayOnCurrentStep();
+		}
 	}
 
     /**
