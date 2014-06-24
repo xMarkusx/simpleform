@@ -32,39 +32,18 @@ namespace CosmoCode\SimpleForm\PreProcessor;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-abstract class AbstractPreProcessor {
+class SetFormValuePreProcessor extends \CosmoCode\SimpleForm\PreProcessor\AbstractPreProcessor {
 
     /**
-     * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
-     * @inject
+     * preProcess
      */
-    protected $formDataHandler;
-
-	/**
-	 * @var \CosmoCode\SimpleForm\Utility\Form\StepHandler
-	 * @inject
-	 */
-	protected $stepHandler;
-
-    /**
-     * @var array
-     */
-    protected $preProcessorConfiguration;
-
-    abstract public function preProcess();
-
-    /**
-     * @param array $preProcessorConfiguration
-     */
-    public function setPreProcessorConfiguration($preProcessorConfiguration) {
-        $this->preProcessorConfiguration = $preProcessorConfiguration;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPreProcessorConfiguration() {
-        return $this->preProcessorConfiguration;
+    public function preProcess() {
+		$conf = $this->getPreProcessorConfiguration();
+		$step = $this->stepHandler->getCurrentStep();
+		$field = $conf['field'];
+		$value = $conf['value'];
+		$this->formDataHandler->setFormValueAtStep($field, $value, $step);
+		$a = "lor";
     }
 }
 ?>

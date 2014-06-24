@@ -166,5 +166,16 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
         }
         return false;
     }
+
+	/**
+	 * @param string $step
+	 * @return bool
+	 */
+	public function checkIfStepIsValid($step) {
+		if(in_array($step, $this->steps, TRUE)) {
+			return TRUE;
+		}
+		return FLASE;
+	}
 }
 ?>
