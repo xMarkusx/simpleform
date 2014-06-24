@@ -43,7 +43,6 @@ class SetFormValuePreProcessor extends \CosmoCode\SimpleForm\PreProcessor\Abstra
 		$field = $conf['field'];
 		$value = $conf['value'];
 		$this->formDataHandler->setFormValueAtStep($field, $value, $step);
-		$a = "lor";
     }
 }
 ?>
