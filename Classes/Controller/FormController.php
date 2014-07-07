@@ -96,10 +96,11 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 
     /**
      * initialize
+	 * @param string $step
      */
-    public function initializeAction() {
+    public function initialize($step) {
         $this->initializeFormDataHandler();
-        $this->initializeStepHandler();
+        $this->initializeStepHandler($step);
         $this->initializeValidationConfigurationHandler();
         $this->initializeSessionHandler();
         $this->initializeInterceptorHandler();
@@ -131,9 +132,13 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 
     /**
      * initialize StepHandler
+	 * @param string $step
      */
-    private function initializeStepHandler() {
+    private function initializeStepHandler($step) {
         $this->stepHandler->setSteps($this->settings['steps']);
+		if($step) {
+			$this->stepHandler->setCurrentStep($step);
+		}
         $this->stepHandler->initialize();
     }
 
@@ -163,14 +168,19 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 
     /**
 	 * action displayForm
-	 * TODO save next/previous step in session and make interntal redirect to displayFormAction
+	 * @param string $step
 	 *
 	 * @return void
 	 */
-	public function displayFormAction() {
+	public function displayFormAction($step = NULL) {
+		$this->initialize($step);
 		$gpData = $this->formDataHandler->getGpData();
 		if(empty($gpData['formPrefix']) || $gpData['formPrefix'] == $this->formDataHandler->getFormPrefix()) {
-			if($this->formDataHandler->formDataExists()) {
+			if($step) {
+				$this->stepHandler->setCurrentStep($step);
+				$this->preProcessorHandler->callAllPreProcessors();
+				$this->stayOnCurrentStep();
+			} elseif($this->formDataHandler->formDataExists()) {
 				$this->validate();
 			} else {
 				$this->preProcessorHandler->callAllPreProcessors();
@@ -240,8 +250,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      */
     private function goToNextStep() {
         $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
-        $this->view->assign('formData', $this->sessionDataHandler->getFormDataFromStep($this->stepHandler->getNextStep()));
-        $this->view->assign('step', $this->stepHandler->getNextStep());
+        $this->redirect("displayForm", NULL, NULL, array("step" => $this->stepHandler->getNextStep()));
     }
 
     /**
@@ -249,8 +258,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      */
     private function goToPreviousStep() {
         $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
-        $this->view->assign('formData', $this->sessionDataHandler->getFormDataFromStep($this->stepHandler->getPreviousStep()));
-        $this->view->assign('step', $this->stepHandler->getPreviousStep());
+		$this->redirect("displayForm", NULL, NULL, array("step" => $this->stepHandler->getPreviousStep()));
     }
 
 	protected function populateFreshestFormData($sessionData, $formData) {

@@ -74,12 +74,14 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
     }
 
     private function defineCurrentStep() {
-        $gpData = $this->formDataHandler->getGpData();
-        if(!empty($gpData['currentStep'])) {
-            $this->currentStep = $gpData['currentStep'];
-        } else {
-            $this->currentStep = $this->firstStepName;
-        }
+		if(!$this->currentStep) {
+			$gpData = $this->formDataHandler->getGpData();
+			if(!empty($gpData['currentStep'])) {
+				$this->currentStep = $gpData['currentStep'];
+			} else {
+				$this->currentStep = $this->firstStepName;
+			}
+		}
     }
 
     private function defineDirection() {
