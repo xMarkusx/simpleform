@@ -179,5 +179,22 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 		return FLASE;
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function currentStepIsFirst() {
+		if($this->currentStep === $this->steps[0]) {
+			return true;
+		}
+		return false;
+	}
+
+	public function currentStepIsLast() {
+		if($this->currentStep === end($this->steps)) {
+			return true;
+		}
+		return false;
+	}
 }
 ?>

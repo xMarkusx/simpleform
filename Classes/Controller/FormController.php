@@ -127,7 +127,11 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      * initialize SessionHandler
      */
     private function initializeSessionHandler() {
-        $this->sessionHandler->setSessionDataStorageKey('simpleForm');
+		if($this->settings['formPrefix']) {
+			$this->sessionHandler->setSessionDataStorageKey($this->settings['formPrefix']);
+		} else {
+        	$this->sessionHandler->setSessionDataStorageKey('simpleForm');
+		}
     }
 
     /**
@@ -190,6 +194,8 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 			$this->preProcessorHandler->callAllPreProcessors();
 			$this->stayOnCurrentStep();
 		}
+		$this->view->assign('stepHandler', $this->stepHandler);
+		$this->view->assign('sessionData', $this->sessionDataHandler->getFormData());
 	}
 
     /**
@@ -210,9 +216,11 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
                     $this->stayOnCurrentStepAfterFailedValidation();
                 } else {
                     if($this->stepHandler->formIsOnLastStep()) {
+						$this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
                         $this->callFinisher();
                         $this->view->assign('finished', 1);
                         $this->view->assign('formData', $this->formDataHandler->getFormDataFromCurrentStep());
+						$this->sessionHandler->clearSessionData();
                     } else {
                         $this->goToNextStep();
                     }
