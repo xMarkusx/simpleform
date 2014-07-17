@@ -49,6 +49,11 @@ class ValidationError {
      */
     private $validationCode;
 
+	/**
+	 * @var string
+	 */
+	protected $customErrorText;
+
     /**
      * @param mixed $formField
      */
@@ -90,5 +95,19 @@ class ValidationError {
     public function getValidationCode() {
         return $this->validationCode;
     }
+
+	/**
+	 * @param string $customErrorText
+	 */
+	public function setCustomErrorText($customErrorText) {
+		$this->customErrorText = $customErrorText;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCustomErrorText() {
+		return $this->customErrorText;
+	}
 }
 ?>

@@ -49,6 +49,10 @@ class ValidationConfigurationHandler implements \TYPO3\CMS\Core\SingletonInterfa
         return $this->typoScriptSettings[$this->stepHandler->getCurrentStep()]['validation'];
     }
 
+	public function getOrValidationFromCurrentStep() {
+		return $this->typoScriptSettings[$this->stepHandler->getCurrentStep()]['orValidation'];
+	}
+
     /**
      * @param array $typoScriptSettings
      */

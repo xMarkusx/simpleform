@@ -39,10 +39,20 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
      */
     private $validation;
 
+	/**
+	 * @var array
+	 */
+	protected $orValidationErrors;
+
     /**
      * @var string
      */
     private $formFieldName;
+
+	/**
+	 * @var string
+	 */
+	private $errorText;
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Validation\ValidationConfigurationHandler
@@ -82,14 +92,84 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
             foreach($validationConfiguration as $formFieldName => $formField) {
                 $this->formFieldName = $formFieldName;
 
-                foreach($formField as $validationCode) {
+                foreach($formField as $validation) {
+					if(is_array($validation)) {
+						$validationCode = $validation['_typoScriptNodeValue'];
+						if(array_key_exists('text', $validation)) {
+							$this->errorText = $validation['text'];
+						} else {
+							$this->errorText = NULL;
+						}
+					} else {
+						$validationCode = $validation;
+						$this->errorText = NULL;
+					}
                     $this->validationFactory->setValidationCode($validationCode);
                     $this->validation = $this->validationFactory->getValidation();
                     $this->checkValidation();
                 }
             }
         }
+		$this->checkOrValidations();
     }
+
+	/**
+	 * check or validations
+	 */
+	protected function checkOrValidations() {
+		$this->orValidationErrors = array();
+		$validationConfiguration = $this->validationConfigurationHandler->getOrValidationFromCurrentStep();
+		if(!$this->deactivateCheck && $validationConfiguration) {
+			foreach($validationConfiguration as $orBlockName => $orBlock) {
+				foreach($orBlock as $conditionName => $condition) {
+					foreach($condition as $formFieldName => $formField) {
+						$this->formFieldName = $formFieldName;
+
+						foreach($formField as $validation) {
+							if(is_array($validation)) {
+								$validationCode = $validation['_typoScriptNodeValue'];
+								if(array_key_exists('text', $validation)) {
+									$this->errorText = $validation['text'];
+								} else {
+									$this->errorText = NULL;
+								}
+							} else {
+								$validationCode = $validation;
+								$this->errorText = NULL;
+							}
+							$this->validationFactory->setValidationCode($validationCode);
+							$this->validation = $this->validationFactory->getValidation();
+							if(!$this->validation->checkValue($this->formDataHandler->getFormValue($this->formFieldName))) {
+								$validationError = new ValidationError();
+								$validationError->setValidationCode($this->validation->getValidationCode());
+								$validationError->setFormValue($this->formDataHandler->getFormValue($this->formFieldName));
+								$validationError->setFormField($this->formFieldName);
+								if($this->errorText) {
+									$validationError->setCustomErrorText($this->errorText);
+								}
+								$this->orValidationErrors[$orBlockName][$conditionName][] = $validationError;
+							}
+						}
+					}
+					if(empty($this->orValidationErrors[$orBlockName][$conditionName])) {
+						$this->orValidationErrors[$orBlockName] = NULL;
+						break;
+					}
+				}
+			}
+		}
+		$this->addOrValidationErrors();
+	}
+
+	protected function addOrValidationErrors() {
+		foreach($this->orValidationErrors as $block) {
+			foreach($block as $condition) {
+				foreach($condition as $validationError) {
+					$this->validationErrorHandler->addValidationError($validationError);
+				}
+			}
+		}
+	}
 
     /**
      * check current validation
@@ -108,6 +188,9 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
         $validationError->setValidationCode($this->validation->getValidationCode());
         $validationError->setFormValue($this->formDataHandler->getFormValue($this->formFieldName));
         $validationError->setFormField($this->formFieldName);
+		if($this->errorText) {
+			$validationError->setCustomErrorText($this->errorText);
+		}
         $this->validationErrorHandler->addValidationError($validationError);
     }
 
