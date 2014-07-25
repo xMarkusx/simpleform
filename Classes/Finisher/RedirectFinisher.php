@@ -45,6 +45,9 @@ class RedirectFinisher extends AbstractFinisher {
 			$redirectPage = $this->finisherConfiguration['redirectPage'];
 			$this->uriBuilder->setTargetPageUid($redirectPage);
 			$link = $this->uriBuilder->build();
+			$this->sessionHandler->clearSessionData();
+			$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager');
+			$persistenceManager->persistAll();
 			\TYPO3\CMS\Core\Utility\HttpUtility::redirect($link);
 		}
 	}

@@ -46,6 +46,12 @@ abstract class AbstractFinisher {
 	 */
 	protected $sessionDataHandler;
 
+	/**
+	 * @var \CosmoCode\SimpleForm\Utility\Session\SessionHandler
+	 * @inject
+	 */
+	protected $sessionHandler;
+
     /**
      * @var array
      */
