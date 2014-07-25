@@ -55,6 +55,12 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
      */
     private $formPrefix;
 
+	/**
+	 * @var \CosmoCode\SimpleForm\Utility\Session\SessionDataHandler
+	 * @inject
+	 */
+	protected $sessionDataHandler;
+
     /**
      * @param boolean $formDataIsManipulated
      */
@@ -113,6 +119,7 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
     public function setFormValue($arrayKey, $formValue) {
         $this->gpData[$this->formPrefix][$this->stepHandler->getCurrentStep()][$arrayKey] = $formValue;
         $this->formDataIsManipulated = true;
+		$this->sessionDataHandler->storeFormDataFromCurrentStep($this->gpData[$this->formPrefix][$this->stepHandler->getCurrentStep()]);
     }
 
 	/**
@@ -137,6 +144,7 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
 		if($this->stepHandler->checkIfStepIsValid($step)) {
 			$this->gpData[$this->formPrefix][$step][$arrayKey] = $formValue;
 			$this->formDataIsManipulated = true;
+			$this->sessionDataHandler->storeFormDataFromStep($this->gpData[$this->formPrefix][$step], $step);
 		}
 	}
 
