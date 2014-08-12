@@ -55,6 +55,19 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
             case \CosmoCode\SimpleForm\Utility\Validation\IsAlphanumericValidation::VALIDATION_CODE:
                 $this->validation = new IsAlphanumericValidation();
                 break;
+			case \CosmoCode\SimpleForm\Utility\Validation\IsNumericValidation::VALIDATION_CODE:
+				$this->validation = new IsNumericValidation();
+				break;
+			default:
+				try {
+					$validation = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($this->validationCode);
+					if(is_a($validation, '\CosmoCode\SimpleForm\Utility\Validation\AbstractValidation')) {
+						$this->validation = $validation;
+					}
+				} catch(\TYPO3\CMS\Core\FormProtection\Exception $e) {
+					//TODO:logging or similar
+				}
+				break;
         }
     }
 
