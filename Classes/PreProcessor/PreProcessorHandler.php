@@ -55,16 +55,18 @@ class PreProcessorHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * TODO: write log if exception appears
      */
     public function createPreProcessorsFromPreProcessorsConfiguration() {
-        foreach($this->preProcessorsConfiguration as $singlePreProcessorConfiguration) {
-            /** @var $preProcessor AbstractPreProcessor */
-            try {
-                $preProcessor = $this->objectManager->get($singlePreProcessorConfiguration['preProcessor']);
-                $preProcessor->setPreProcessorConfiguration($singlePreProcessorConfiguration['conf']);
-                $this->preProcessors[] = $preProcessor;
-            } catch(\Exception $exception) {
+		if(is_array($this->preProcessorsConfiguration)) {
+			foreach($this->preProcessorsConfiguration as $singlePreProcessorConfiguration) {
+				/** @var $preProcessor AbstractPreProcessor */
+				try {
+					$preProcessor = $this->objectManager->get($singlePreProcessorConfiguration['preProcessor']);
+					$preProcessor->setPreProcessorConfiguration($singlePreProcessorConfiguration['conf']);
+					$this->preProcessors[] = $preProcessor;
+				} catch(\Exception $exception) {
 
-            }
-        }
+				}
+			}
+		}
     }
 
     /**
