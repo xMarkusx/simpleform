@@ -163,9 +163,11 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
 
 	protected function addOrValidationErrors() {
 		foreach($this->orValidationErrors as $block) {
-			foreach($block as $condition) {
-				foreach($condition as $validationError) {
-					$this->validationErrorHandler->addValidationError($validationError);
+			if(is_array($block)) {
+				foreach($block as $condition) {
+					foreach($condition as $validationError) {
+						$this->validationErrorHandler->addValidationError($validationError);
+					}
 				}
 			}
 		}
