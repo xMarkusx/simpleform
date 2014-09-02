@@ -93,6 +93,7 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
                 $this->formFieldName = $formFieldName;
 
                 foreach($formField as $validation) {
+					$validationConfig = array();
 					if(is_array($validation)) {
 						$validationCode = $validation['_typoScriptNodeValue'];
 						if(array_key_exists('text', $validation)) {
@@ -100,12 +101,16 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
 						} else {
 							$this->errorText = NULL;
 						}
+						if(array_key_exists('conf', $validation)) {
+							$validationConfig = $validation['conf'];
+						}
 					} else {
 						$validationCode = $validation;
 						$this->errorText = NULL;
 					}
                     $this->validationFactory->setValidationCode($validationCode);
                     $this->validation = $this->validationFactory->getValidation();
+					$this->validation->setConf($validationConfig);
                     $this->checkValidation();
                 }
             }
@@ -126,6 +131,7 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
 						$this->formFieldName = $formFieldName;
 
 						foreach($formField as $validation) {
+							$validationConfig = array();
 							if(is_array($validation)) {
 								$validationCode = $validation['_typoScriptNodeValue'];
 								if(array_key_exists('text', $validation)) {
@@ -133,12 +139,16 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
 								} else {
 									$this->errorText = NULL;
 								}
+								if(array_key_exists('conf', $validation)) {
+									$validationConfig = $validation['conf'];
+								}
 							} else {
 								$validationCode = $validation;
 								$this->errorText = NULL;
 							}
 							$this->validationFactory->setValidationCode($validationCode);
 							$this->validation = $this->validationFactory->getValidation();
+							$this->validation->setConf($validationConfig);
 							if(!$this->validation->checkValue($this->formDataHandler->getFormValue($this->formFieldName))) {
 								$validationError = new ValidationError();
 								$validationError->setValidationCode($this->validation->getValidationCode());

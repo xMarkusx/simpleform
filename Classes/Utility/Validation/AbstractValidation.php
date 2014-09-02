@@ -37,7 +37,12 @@ abstract class AbstractValidation {
     /**
      * @var mixed
      */
-    protected  $value;
+    protected $value;
+
+	/**
+	 * @var array
+	 */
+	protected $conf;
 
     /**
      * @param mixed $value
@@ -57,5 +62,19 @@ abstract class AbstractValidation {
      * @return string
      */
     abstract public function getValidationCode();
+
+	/**
+	 * @param array $conf
+	 */
+	public function setConf($conf) {
+		$this->conf = $conf;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getConf() {
+		return $this->conf;
+	}
 }
 ?>
