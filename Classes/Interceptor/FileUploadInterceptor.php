@@ -100,7 +100,10 @@ class FileUploadInterceptor extends AbstractInterceptor {
      * check current file type
      */
     private function checkFileType() {
-        if(in_array($this->currentFile['type'], explode(',', $this->currentFileConfiguration['allowedMimeTypes']))) {
+		$fileInfo = finfo_open(FILEINFO_MIME_TYPE);
+		$mimeType = finfo_file($fileInfo, $this->currentFile['tmp_name']);
+		finfo_close($fileInfo);
+        if(in_array($mimeType, explode(',', $this->currentFileConfiguration['allowedMimeTypes']))) {
             return true;
         }
         $this->addFileErrorToValidationErrors('no_valid_file_type');
