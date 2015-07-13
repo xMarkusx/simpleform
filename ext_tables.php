@@ -11,4 +11,6 @@ if (!defined('TYPO3_MODE')) {
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Simple Form');
 
+require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('simple_form', 'Configuration/Backend/TyposcriptObject.php'));
+
 ?>
