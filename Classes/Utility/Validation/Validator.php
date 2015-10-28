@@ -54,6 +54,16 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	private $errorText;
 
+	/**
+	 * @var string
+	 */
+	private $eachFieldName = '';
+
+	/**
+	 * @var string
+	 */
+	private $eachIndex = '';
+
     /**
      * @var \CosmoCode\SimpleForm\Utility\Validation\ValidationConfigurationHandler
      * @inject
@@ -86,16 +96,28 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * check form-values against typoscript validation configuration
      */
-    public function checkFormValues() {
-		$validationConfiguration = $this->validationConfigurationHandler->getValidationConfigurationFromCurrentStep();
+    public function checkFormValues($validationConfiguration = NULL) {
+		if(is_null($validationConfiguration)) {
+			$validationConfiguration = $this->validationConfigurationHandler->getValidationConfigurationFromCurrentStep();
+		}
         if(!$this->deactivateCheck && $validationConfiguration) {
             foreach($validationConfiguration as $formFieldName => $formField) {
                 $this->formFieldName = $formFieldName;
-
                 foreach($formField as $validation) {
 					$validationConfig = array();
 					if(is_array($validation)) {
 						$validationCode = $validation['_typoScriptNodeValue'];
+						if($validationCode === 'each') {
+							$this->eachFieldName = $formFieldName;
+							unset($validation['_typoScriptNodeValue']);
+							foreach ($this->formDataHandler->getFormValue($formFieldName) as $index => $eachValidation) {
+								$this->eachIndex = $index;
+								$this->checkFormValues($validation);
+							}
+							$this->eachFieldName = '';
+							$this->eachIndex = '';
+							break;
+						}
 						if(array_key_exists('text', $validation)) {
 							$this->errorText = $validation['text'];
 						} else {
@@ -187,9 +209,17 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
      * check current validation
      */
     private function checkValidation() {
-        if(!$this->validation->checkValue($this->formDataHandler->getFormValue($this->formFieldName))) {
-            $this->addValidationError();
-        }
+		if($this->eachFieldName && $this->eachIndex) {
+			$eachField = $this->formDataHandler->getFormValue($this->eachFieldName);
+			$eachFieldValue = $eachField[$this->eachIndex][$this->formFieldName];
+			if(!$this->validation->checkValue($eachFieldValue)) {
+				$this->addValidationError();
+			}
+		} else {
+			if (!$this->validation->checkValue($this->formDataHandler->getFormValue($this->formFieldName))) {
+				$this->addValidationError();
+			}
+		}
     }
 
     /**
@@ -198,8 +228,17 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
     private function addValidationError() {
         $validationError = new ValidationError();
         $validationError->setValidationCode($this->validation->getValidationCode());
-        $validationError->setFormValue($this->formDataHandler->getFormValue($this->formFieldName));
-        $validationError->setFormField($this->formFieldName);
+		if($this->eachFieldName && $this->eachIndex) {
+			$eachField = $this->formDataHandler->getFormValue($this->eachFieldName);
+			$eachFieldValue = $eachField[$this->eachIndex][$this->formFieldName];
+			$validationError->setFormValue($eachFieldValue);
+			$validationError->setFormField($this->eachFieldName);
+			$validationError->setEachFieldName($this->formFieldName);
+			$validationError->setEachIndex($this->eachIndex);
+		} else {
+			$validationError->setFormValue($this->formDataHandler->getFormValue($this->formFieldName));
+			$validationError->setFormField($this->formFieldName);
+		}
 		if($this->errorText) {
 			$validationError->setCustomErrorText($this->errorText);
 		}

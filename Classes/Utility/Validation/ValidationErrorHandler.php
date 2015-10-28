@@ -63,7 +63,11 @@ class ValidationErrorHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * @param \CosmoCode\SimpleForm\Utility\Validation\ValidationError $validationError
      */
     public function addValidationError($validationError) {
-        $this->validationErrors[$this->stepHandler->getCurrentStep()][$validationError->getFormField()][] = $validationError;
+		if($validationError->getEachFieldName() && $validationError->getEachIndex()) {
+			$this->validationErrors[$this->stepHandler->getCurrentStep()][$validationError->getFormField()][$validationError->getEachIndex()][$validationError->getEachFieldName()][] = $validationError;
+		} else {
+			$this->validationErrors[$this->stepHandler->getCurrentStep()][$validationError->getFormField()][] = $validationError;
+		}
     }
 
     /**
