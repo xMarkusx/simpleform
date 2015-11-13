@@ -152,7 +152,7 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * @return bool
      */
     public function formDataExists() {
-        if(!empty($this->gpData)) {
+        if(!empty($this->gpData[$this->formPrefix])) {
             return true;
         }
         return false;

@@ -258,7 +258,9 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      */
     private function goToNextStep() {
         $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
-        $this->redirect("displayForm", NULL, NULL, array("step" => $this->stepHandler->getNextStep()));
+		$additionalParams = $this->getAdditionalParams();
+		$additionalParams['step'] = $this->stepHandler->getNextStep();
+        $this->redirect("displayForm", NULL, NULL, $additionalParams);
     }
 
     /**
@@ -266,7 +268,9 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      */
     private function goToPreviousStep() {
         $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
-		$this->redirect("displayForm", NULL, NULL, array("step" => $this->stepHandler->getPreviousStep()));
+		$additionalParams = $this->getAdditionalParams();
+		$additionalParams['step'] = $this->stepHandler->getPreviousStep();
+		$this->redirect("displayForm", NULL, NULL, $additionalParams);
     }
 
 	protected function populateFreshestFormData($sessionData, $formData) {
@@ -275,6 +279,21 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 		} else {
 			$this->view->assign('formData', $formData);
 		}
+	}
+
+	/**
+	 * Returns array with additional params defined in typoscript settings
+	 *
+	 * @return array
+	 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+	 */
+	protected function getAdditionalParams() {
+		$additionalParams = array();
+		foreach($this->settings['additionalParams'] as $additionalParam) {
+			if($this->request->hasArgument($additionalParam));
+			$additionalParams[$additionalParam] = $this->request->getArgument($additionalParam);
+		}
+		return $additionalParams;
 	}
 }
 ?>
