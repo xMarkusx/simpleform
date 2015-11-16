@@ -226,7 +226,9 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
                         $this->callFinisher();
                         $this->view->assign('finished', 1);
                         $this->view->assign('formData', $this->formDataHandler->getFormDataFromCurrentStep());
-						$this->sessionHandler->clearSessionData();
+						if($this->settings['clearSessionDataWhenFinished'] === '1') {
+							$this->sessionHandler->clearSessionData();
+						}
                     } else {
                         $this->goToNextStep();
                     }
