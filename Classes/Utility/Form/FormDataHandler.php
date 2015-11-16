@@ -130,7 +130,8 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function getFormValueAtStep($arrayKey, $step) {
 		if($this->stepHandler->checkIfStepIsValid($step)) {
-			return $this->gpData[$this->formPrefix][$step][$arrayKey];
+			$stepData = $this->sessionDataHandler->getFormDataFromStep($step);
+			return $stepData[$arrayKey];
 		}
 		return NULL;
 	}
