@@ -173,18 +173,24 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
     /**
 	 * action displayForm
 	 * @param string $step
+	 * @param boolean $simulateSubmit
 	 *
 	 * @return void
 	 */
-	public function displayFormAction($step = NULL) {
+	public function displayFormAction($step = NULL, $simulateSubmit = FALSE) {
 		$this->initialize($step);
 		$gpData = $this->formDataHandler->getGpData();
 		if(empty($gpData['formPrefix']) || $gpData['formPrefix'] == $this->formDataHandler->getFormPrefix()) {
-			if($step) {
+			if($step && !$simulateSubmit) {
 				$this->stepHandler->setCurrentStep($step);
 				$this->preProcessorHandler->callAllPreProcessors();
 				$this->stayOnCurrentStep();
 			} elseif($this->formDataHandler->formDataExists()) {
+				$this->validate();
+			} elseif($simulateSubmit && $step) {
+				$manipulatedGpData = $gpData;
+				$manipulatedGpData[$this->formDataHandler->getFormPrefix()][$step] = $this->sessionDataHandler->getFormDataFromCurrentStep();
+				$this->formDataHandler->setGpData($manipulatedGpData);
 				$this->validate();
 			} else {
 				$this->preProcessorHandler->callAllPreProcessors();
