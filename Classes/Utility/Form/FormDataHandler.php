@@ -143,9 +143,10 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function setFormValueAtStep($arrayKey, $formValue, $step) {
 		if($this->stepHandler->checkIfStepIsValid($step)) {
-			$this->gpData[$this->formPrefix][$step][$arrayKey] = $formValue;
+			$stepData = $this->sessionDataHandler->getFormDataFromStep($step);
+			$stepData[$arrayKey] = $formValue;
 			$this->formDataIsManipulated = true;
-			$this->sessionDataHandler->storeFormDataFromStep($this->gpData[$this->formPrefix][$step], $step);
+			$this->sessionDataHandler->storeFormDataFromStep($stepData, $step);
 		}
 	}
 
