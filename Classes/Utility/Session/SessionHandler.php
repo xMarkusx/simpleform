@@ -49,7 +49,7 @@ class SessionHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      *
      * Loads the data from the session, and populates formData and passedActionMethods
-     * @return void
+     * @return mixed
      *
      */
     public function restoreFromSession() {
@@ -73,6 +73,7 @@ class SessionHandler implements \TYPO3\CMS\Core\SingletonInterface {
      */
     public function clearSessionData() {
         $GLOBALS['TSFE']->fe_user->setKey('ses', $this->sessionDataStorageKey, NULL);
+		$GLOBALS['TSFE']->fe_user->storeSessionData();
     }
 }
 ?>
