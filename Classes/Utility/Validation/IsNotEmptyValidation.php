@@ -50,16 +50,17 @@ class IsNotEmptyValidation extends AbstractValidation {
      * @return boolean
      */
     protected function validate() {
+        $acceptZeroString = $this->conf['acceptZeroString'];
         if(is_array($this->value)) {
             foreach($this->value as $item) {
-                if(!empty($item)) {
+                if(!empty($item) || ($acceptZeroString && $item === '0')) {
                     return true;
                 }
             }
             return false;
         }
 
-        if(!empty($this->value)) {
+        if(!empty($this->value) || ($acceptZeroString && $this->value === '0')) {
             return true;
         }
         return false;
