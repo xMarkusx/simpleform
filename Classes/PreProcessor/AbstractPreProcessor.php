@@ -41,6 +41,12 @@ abstract class AbstractPreProcessor {
     protected $formDataHandler;
 
 	/**
+	 * @var \CosmoCode\SimpleForm\Utility\Session\SessionDataHandler
+	 * @inject
+	 */
+	protected $sessionDataHandler;
+
+	/**
 	 * @var \CosmoCode\SimpleForm\Utility\Form\StepHandler
 	 * @inject
 	 */
