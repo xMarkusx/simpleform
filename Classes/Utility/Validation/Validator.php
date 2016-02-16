@@ -133,6 +133,8 @@ class Validator implements \TYPO3\CMS\Core\SingletonInterface {
                     $this->validationFactory->setValidationCode($validationCode);
                     $this->validation = $this->validationFactory->getValidation();
 					$this->validation->setConf($validationConfig);
+					$this->validation->setEachIndex($this->eachIndex);
+					$this->validation->setEachFieldName($this->eachFieldName);
                     $this->checkValidation();
                 }
             }

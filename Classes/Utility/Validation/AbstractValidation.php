@@ -50,6 +50,16 @@ abstract class AbstractValidation {
 	 */
 	protected $conf;
 
+	/**
+	 * @var string
+	 */
+	protected $eachFieldName = '';
+
+	/**
+	 * @var string
+	 */
+	protected $eachIndex = '';
+
     /**
      * @param mixed $value
      * @return bool
@@ -81,6 +91,45 @@ abstract class AbstractValidation {
 	 */
 	public function getConf() {
 		return $this->conf;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEachFieldName() {
+		return $this->eachFieldName;
+	}
+
+	/**
+	 * @param string $eachFieldName
+	 */
+	public function setEachFieldName($eachFieldName) {
+		$this->eachFieldName = $eachFieldName;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEachIndex() {
+		return $this->eachIndex;
+	}
+
+	/**
+	 * @param string $eachIndex
+	 */
+	public function setEachIndex($eachIndex) {
+		$this->eachIndex = $eachIndex;
+	}
+
+	/**
+	 * Check if Validation is called in an each-loop
+	 * @return bool
+	 */
+	public function isCalledInEachLoop() {
+		if(!empty($this->eachFieldName) && !empty($this->eachIndex)) {
+			return TRUE;
+		}
+		return FALSE;
 	}
 }
 ?>
