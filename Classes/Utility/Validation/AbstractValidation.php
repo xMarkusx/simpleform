@@ -34,6 +34,12 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  */
 abstract class AbstractValidation {
 
+	/**
+	 * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
+	 * @inject
+	 */
+	protected $formDataHandler = null;
+
     /**
      * @var mixed
      */

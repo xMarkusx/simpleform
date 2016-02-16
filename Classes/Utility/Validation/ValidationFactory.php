@@ -34,6 +34,12 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  */
 class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
 
+	/**
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+	 * @inject
+	 */
+	protected $objectManager = null;
+
     /**
      * @var string
      */
@@ -50,20 +56,20 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
     private function defineValidationType() {
         switch($this->validationCode) {
             case \CosmoCode\SimpleForm\Utility\Validation\IsNotEmptyValidation::VALIDATION_CODE:
-                $this->validation = new IsNotEmptyValidation();
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsNotEmptyValidation');
                 break;
             case \CosmoCode\SimpleForm\Utility\Validation\IsAlphanumericValidation::VALIDATION_CODE:
-                $this->validation = new IsAlphanumericValidation();
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsAlphanumericValidation');
                 break;
 			case \CosmoCode\SimpleForm\Utility\Validation\IsNumericValidation::VALIDATION_CODE:
-				$this->validation = new IsNumericValidation();
+				$this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsNumericValidation');
 				break;
 			case \CosmoCode\SimpleForm\Utility\Validation\IsEmailValidation::VALIDATION_CODE:
-				$this->validation = new IsEmailValidation();
+				$this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsEmailValidation');
 				break;
 			default:
 				try {
-					$validation = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($this->validationCode);
+					$validation = $this->objectManager->get($this->validationCode);
 					if(is_a($validation, '\CosmoCode\SimpleForm\Utility\Validation\AbstractValidation')) {
 						$this->validation = $validation;
 					}
