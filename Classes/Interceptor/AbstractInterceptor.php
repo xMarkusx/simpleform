@@ -51,6 +51,18 @@ abstract class AbstractInterceptor {
      */
     protected $interceptorConfiguration;
 
+	/**
+	 * @var \CosmoCode\SimpleForm\Utility\Session\SessionDataHandler
+	 * @inject
+	 */
+	protected $sessionDataHandler;
+
+	/**
+	 * @var \CosmoCode\SimpleForm\Utility\Form\StepHandler
+	 * @inject
+	 */
+	protected $stepHandler;
+
     abstract public function intercept();
 
     /**
