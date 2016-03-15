@@ -44,6 +44,9 @@ class RedirectFinisher extends AbstractFinisher {
 		if(array_key_exists('redirectPage', $this->finisherConfiguration)) {
 			$redirectPage = $this->finisherConfiguration['redirectPage'];
 			$this->uriBuilder->setTargetPageUid($redirectPage);
+			if(is_array($this->finisherConfiguration['arguments'])) {
+				$this->uriBuilder->setArguments($this->finisherConfiguration['arguments']);
+			}
 			$link = $this->uriBuilder->build();
 			if($this->finisherConfiguration['clearSessionDataWhenFinished'] === '1') {
 				$this->sessionHandler->clearSessionData();
