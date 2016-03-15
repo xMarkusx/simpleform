@@ -13,7 +13,9 @@ $typeName = 'typoscript_object';
     'CType'
 );
 
-\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('tt_content');
+if (version_compare(TYPO3_version, '6.2.0', '<')) {
+    \TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('tt_content');
+}
 
 $TCA['tt_content']['types'][$typeName] = array(
     'showitem' =>
