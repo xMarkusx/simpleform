@@ -56,14 +56,16 @@ class FinisherHandler implements \TYPO3\CMS\Core\SingletonInterface {
      */
     public function createFinishersFromFinishersConfiguration() {
 		$this->resetFinishers();
-        foreach($this->finishersConfiguration as $singleFinisherConfiguration) {
-            /** @var $finisher AbstractFinisher */
-            try {
-                $finisher = $this->objectManager->get($singleFinisherConfiguration['finisher']);
-                $finisher->setFinisherConfiguration($singleFinisherConfiguration['conf']);
-                $this->finishers[] = $finisher;
-            } catch(\Exception $exception) {
+        if ($this->finishersConfiguration) {
+            foreach($this->finishersConfiguration as $singleFinisherConfiguration) {
+                /** @var $finisher AbstractFinisher */
+                try {
+                    $finisher = $this->objectManager->get($singleFinisherConfiguration['finisher']);
+                    $finisher->setFinisherConfiguration($singleFinisherConfiguration['conf']);
+                    $this->finishers[] = $finisher;
+                } catch(\Exception $exception) {
 
+                }
             }
         }
     }
