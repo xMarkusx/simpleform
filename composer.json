@@ -1,0 +1,29 @@
+{
+  "name": "cosmocode/typo3-ext-simple-form",
+  "type": "typo3-cms-extension",
+  "description": "Simple Form Extension based on Extbase/Fluid",
+  "keywords": [
+    "TYPO3",
+    "extension",
+    "form"
+  ],
+  "authors": [
+    {
+      "name": "Markus Baumann",
+      "email": "baumann@cosmocode.de",
+      "role": "Developer",
+      "homepage": "http://www.cosmocode.de"
+    }
+  ],
+  "require": {
+    "typo3/cms-core": ">=6.0.0"
+  },
+  "replace": {
+    "simple_form": "self.version"
+  },
+  "autoload": {
+    "psr-4": {
+      "CosmoCode\\SimpleForm\\": "Classes/"
+    }
+  }
+}
