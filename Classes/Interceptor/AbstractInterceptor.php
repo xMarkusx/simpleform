@@ -69,6 +69,12 @@ abstract class AbstractInterceptor {
      * @param array $interceptorConfiguration
      */
     public function setInterceptorConfiguration($interceptorConfiguration) {
+        if (isset($interceptorConfiguration['enableTypoScriptProcessing'])
+            && $interceptorConfiguration['enableTypoScriptProcessing'] === '1'
+        ) {
+            \CosmoCode\SimpleForm\Utility\TypoScript::processTypoScriptSetupRecursive($interceptorConfiguration);
+        }
+
         $this->interceptorConfiguration = $interceptorConfiguration;
     }
 

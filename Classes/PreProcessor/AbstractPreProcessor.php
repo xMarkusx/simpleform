@@ -63,6 +63,12 @@ abstract class AbstractPreProcessor {
      * @param array $preProcessorConfiguration
      */
     public function setPreProcessorConfiguration($preProcessorConfiguration) {
+        if (isset($preProcessorConfiguration['enableTypoScriptProcessing'])
+            && $preProcessorConfiguration['enableTypoScriptProcessing'] === '1'
+        ) {
+            \CosmoCode\SimpleForm\Utility\TypoScript::processTypoScriptSetupRecursive($preProcessorConfiguration);
+        }
+
         $this->preProcessorConfiguration = $preProcessorConfiguration;
     }
 

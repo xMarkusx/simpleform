@@ -17,4 +17,10 @@ if (!defined('TYPO3_MODE')) {
 	)
 );
 
+/**
+ * Hook to allow accessing simple_form session data via getText (e.g. foo = TEXT, foo.data = simpleForm:First|email)
+ */
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_content.php']['getData'][]
+	= 'CosmoCode\SimpleForm\Hooks\GetData';
+
 ?>

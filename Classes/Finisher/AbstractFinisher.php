@@ -63,6 +63,12 @@ abstract class AbstractFinisher {
      * @param array $finisherConfiguration
      */
     public function setFinisherConfiguration($finisherConfiguration) {
+        if (isset($finisherConfiguration['enableTypoScriptProcessing'])
+            && $finisherConfiguration['enableTypoScriptProcessing'] === '1'
+        ) {
+            \CosmoCode\SimpleForm\Utility\TypoScript::processTypoScriptSetupRecursive($finisherConfiguration);
+        }
+
         $this->finisherConfiguration = $finisherConfiguration;
     }
 
