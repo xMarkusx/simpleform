@@ -55,6 +55,7 @@ class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * TODO: write log if exception appears
      */
     public function createInterceptorsFromInterceptorsConfiguration() {
+        $this->resetInterceptors();
 		if(is_array($this->interceptorsConfiguration)) {
 			foreach($this->interceptorsConfiguration as $singleInterceptorConfiguration) {
 				/** @var $interceptor AbstractInterceptor */
@@ -94,6 +95,10 @@ class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface {
      */
     public function getInterceptorsConfiguration() {
         return $this->interceptorsConfiguration;
+    }
+
+        private function resetInterceptors() {
+        $this->interceptors = array();
     }
 }
 ?>
