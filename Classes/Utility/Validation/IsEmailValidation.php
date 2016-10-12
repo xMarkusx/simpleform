@@ -49,6 +49,9 @@ class IsEmailValidation extends AbstractValidation {
      * @return boolean
      */
     protected function validate() {
+        if($this->value === '') {
+            return true;
+        }
         if(\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($this->value)) {
             return true;
         }
