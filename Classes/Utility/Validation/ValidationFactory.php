@@ -67,6 +67,15 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
             case \CosmoCode\SimpleForm\Utility\Validation\IsEmailValidation::VALIDATION_CODE:
                 $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsEmailValidation');
                 break;
+            case \CosmoCode\SimpleForm\Utility\Validation\MaxLengthValidation::VALIDATION_CODE:
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\MaxLengthValidation');
+                break;
+            case \CosmoCode\SimpleForm\Utility\Validation\MinLengthValidation::VALIDATION_CODE:
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\MinLengthValidation');
+                break;
+            case \CosmoCode\SimpleForm\Utility\Validation\RegexValidation::VALIDATION_CODE:
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\RegexValidation');
+                break;
             default:
                 try {
                     $validation = $this->objectManager->get($this->validationCode);
