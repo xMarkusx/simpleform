@@ -55,11 +55,11 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
      */
     private $formPrefix;
 
-	/**
-	 * @var \CosmoCode\SimpleForm\Utility\Session\SessionDataHandler
-	 * @inject
-	 */
-	protected $sessionDataHandler;
+    /**
+     * @var \CosmoCode\SimpleForm\Utility\Session\SessionDataHandler
+     * @inject
+     */
+    protected $sessionDataHandler;
 
     /**
      * @param boolean $formDataIsManipulated
@@ -119,38 +119,38 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
     public function setFormValue($arrayKey, $formValue) {
         $this->gpData[$this->formPrefix][$this->stepHandler->getCurrentStep()][$arrayKey] = $formValue;
         $this->formDataIsManipulated = true;
-		$sessionDataFromCurrentStep = $this->sessionDataHandler->getFormDataFromCurrentStep();
-		$sessionDataFromCurrentStep[$arrayKey] = $formValue;
-		$this->sessionDataHandler->storeFormDataFromCurrentStep($sessionDataFromCurrentStep);
+        $sessionDataFromCurrentStep = $this->sessionDataHandler->getFormDataFromCurrentStep();
+        $sessionDataFromCurrentStep[$arrayKey] = $formValue;
+        $this->sessionDataHandler->storeFormDataFromCurrentStep($sessionDataFromCurrentStep);
     }
 
-	/**
-	 * @param string $arrayKey
-	 * @param string $step
-	 *
-	 * @return mixed
-	 */
-	public function getFormValueAtStep($arrayKey, $step) {
-		if($this->stepHandler->checkIfStepIsValid($step)) {
-			$stepData = $this->sessionDataHandler->getFormDataFromStep($step);
-			return $stepData[$arrayKey];
-		}
-		return NULL;
-	}
+    /**
+     * @param string $arrayKey
+     * @param string $step
+     *
+     * @return mixed
+     */
+    public function getFormValueAtStep($arrayKey, $step) {
+        if($this->stepHandler->checkIfStepIsValid($step)) {
+            $stepData = $this->sessionDataHandler->getFormDataFromStep($step);
+            return $stepData[$arrayKey];
+        }
+        return NULL;
+    }
 
-	/**
-	 * @param string $arrayKey
-	 * @param mixed $formValue
-	 * @param string $step
-	 */
-	public function setFormValueAtStep($arrayKey, $formValue, $step) {
-		if($this->stepHandler->checkIfStepIsValid($step)) {
-			$stepData = $this->sessionDataHandler->getFormDataFromStep($step);
-			$stepData[$arrayKey] = $formValue;
-			$this->formDataIsManipulated = true;
-			$this->sessionDataHandler->storeFormDataFromStep($stepData, $step);
-		}
-	}
+    /**
+     * @param string $arrayKey
+     * @param mixed $formValue
+     * @param string $step
+     */
+    public function setFormValueAtStep($arrayKey, $formValue, $step) {
+        if($this->stepHandler->checkIfStepIsValid($step)) {
+            $stepData = $this->sessionDataHandler->getFormDataFromStep($step);
+            $stepData[$arrayKey] = $formValue;
+            $this->formDataIsManipulated = true;
+            $this->sessionDataHandler->storeFormDataFromStep($stepData, $step);
+        }
+    }
 
     /**
      * @return bool

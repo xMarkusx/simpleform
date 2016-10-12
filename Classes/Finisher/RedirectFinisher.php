@@ -34,27 +34,27 @@ namespace CosmoCode\SimpleForm\Finisher;
  */
 class RedirectFinisher extends AbstractFinisher {
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder
-	 * @inject
-	 */
-	protected $uriBuilder;
+    /**
+     * @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder
+     * @inject
+     */
+    protected $uriBuilder;
 
     public function finish() {
-		if(array_key_exists('redirectPage', $this->finisherConfiguration)) {
-			$redirectPage = $this->finisherConfiguration['redirectPage'];
-			$this->uriBuilder->setTargetPageUid($redirectPage);
-			if(is_array($this->finisherConfiguration['arguments'])) {
-				$this->uriBuilder->setArguments($this->finisherConfiguration['arguments']);
-			}
-			$link = $this->uriBuilder->build();
-			if($this->finisherConfiguration['clearSessionDataWhenFinished'] === '1') {
-				$this->sessionHandler->clearSessionData();
-			}
-			$persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager');
-			$persistenceManager->persistAll();
-			\TYPO3\CMS\Core\Utility\HttpUtility::redirect($link);
-		}
-	}
+        if(array_key_exists('redirectPage', $this->finisherConfiguration)) {
+            $redirectPage = $this->finisherConfiguration['redirectPage'];
+            $this->uriBuilder->setTargetPageUid($redirectPage);
+            if(is_array($this->finisherConfiguration['arguments'])) {
+                $this->uriBuilder->setArguments($this->finisherConfiguration['arguments']);
+            }
+            $link = $this->uriBuilder->build();
+            if($this->finisherConfiguration['clearSessionDataWhenFinished'] === '1') {
+                $this->sessionHandler->clearSessionData();
+            }
+            $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager');
+            $persistenceManager->persistAll();
+            \TYPO3\CMS\Core\Utility\HttpUtility::redirect($link);
+        }
+    }
 }
 ?>

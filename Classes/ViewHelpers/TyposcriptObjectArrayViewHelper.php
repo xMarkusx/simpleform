@@ -35,14 +35,14 @@ class TyposcriptObjectArrayViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\A
      * @return array
      */
     public function render($string) {
-		$output = array();
-		$items = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $string);
-		foreach($items as $item) {
-			$keyValue = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(':', $item);
-			$output[$keyValue[0]] = $keyValue[1];
-		}
+        $output = array();
+        $items = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $string);
+        foreach($items as $item) {
+            $keyValue = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(':', $item);
+            $output[$keyValue[0]] = $keyValue[1];
+        }
 
-		return $output;
+        return $output;
     }
 }
 

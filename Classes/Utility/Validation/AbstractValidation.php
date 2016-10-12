@@ -34,31 +34,31 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  */
 abstract class AbstractValidation {
 
-	/**
-	 * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
-	 * @inject
-	 */
-	protected $formDataHandler = null;
+    /**
+     * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
+     * @inject
+     */
+    protected $formDataHandler = null;
 
     /**
      * @var mixed
      */
     protected $value;
 
-	/**
-	 * @var array
-	 */
-	protected $conf;
+    /**
+     * @var array
+     */
+    protected $conf;
 
-	/**
-	 * @var string
-	 */
-	protected $eachFieldName = '';
+    /**
+     * @var string
+     */
+    protected $eachFieldName = '';
 
-	/**
-	 * @var string
-	 */
-	protected $eachIndex = '';
+    /**
+     * @var string
+     */
+    protected $eachIndex = '';
 
     /**
      * @param mixed $value
@@ -79,57 +79,57 @@ abstract class AbstractValidation {
      */
     abstract public function getValidationCode();
 
-	/**
-	 * @param array $conf
-	 */
-	public function setConf($conf) {
-		$this->conf = $conf;
-	}
+    /**
+     * @param array $conf
+     */
+    public function setConf($conf) {
+        $this->conf = $conf;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getConf() {
-		return $this->conf;
-	}
+    /**
+     * @return array
+     */
+    public function getConf() {
+        return $this->conf;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getEachFieldName() {
-		return $this->eachFieldName;
-	}
+    /**
+     * @return string
+     */
+    public function getEachFieldName() {
+        return $this->eachFieldName;
+    }
 
-	/**
-	 * @param string $eachFieldName
-	 */
-	public function setEachFieldName($eachFieldName) {
-		$this->eachFieldName = $eachFieldName;
-	}
+    /**
+     * @param string $eachFieldName
+     */
+    public function setEachFieldName($eachFieldName) {
+        $this->eachFieldName = $eachFieldName;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getEachIndex() {
-		return $this->eachIndex;
-	}
+    /**
+     * @return string
+     */
+    public function getEachIndex() {
+        return $this->eachIndex;
+    }
 
-	/**
-	 * @param string $eachIndex
-	 */
-	public function setEachIndex($eachIndex) {
-		$this->eachIndex = $eachIndex;
-	}
+    /**
+     * @param string $eachIndex
+     */
+    public function setEachIndex($eachIndex) {
+        $this->eachIndex = $eachIndex;
+    }
 
-	/**
-	 * Check if Validation is called in an each-loop
-	 * @return bool
-	 */
-	public function isCalledInEachLoop() {
-		if(!empty($this->eachFieldName) && !empty($this->eachIndex)) {
-			return TRUE;
-		}
-		return FALSE;
-	}
+    /**
+     * Check if Validation is called in an each-loop
+     * @return bool
+     */
+    public function isCalledInEachLoop() {
+        if(!empty($this->eachFieldName) && !empty($this->eachIndex)) {
+            return TRUE;
+        }
+        return FALSE;
+    }
 }
 ?>

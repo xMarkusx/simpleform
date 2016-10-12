@@ -88,11 +88,11 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      */
     private $finisherHandler;
 
-	/**
-	 * @var \CosmoCode\SimpleForm\PreProcessor\PreProcessorHandler
-	 * @inject
-	 */
-	private $preProcessorHandler;
+    /**
+     * @var \CosmoCode\SimpleForm\PreProcessor\PreProcessorHandler
+     * @inject
+     */
+    private $preProcessorHandler;
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Security\CsrfProtection
@@ -102,7 +102,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 
     /**
      * initialize
-	 * @param string $step
+     * @param string $step
      */
     public function initialize($step) {
         $this->initializeFormDataHandler();
@@ -111,7 +111,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->initializeSessionHandler();
         $this->initializeInterceptorHandler();
         $this->initializeFinisherHandler();
-		$this->initializePreProcessorHandler();
+        $this->initializePreProcessorHandler();
         if(array_key_exists('activateCsrfProtection', $this->settings) && $this->settings['activateCsrfProtection'] === '1') {
             $this->initializeCsrfProtection();
         }
@@ -136,22 +136,22 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      * initialize SessionHandler
      */
     private function initializeSessionHandler() {
-		if($this->settings['formPrefix']) {
-			$this->sessionHandler->setSessionDataStorageKey($this->settings['formPrefix']);
-		} else {
-        	$this->sessionHandler->setSessionDataStorageKey('simpleForm');
-		}
+        if($this->settings['formPrefix']) {
+            $this->sessionHandler->setSessionDataStorageKey($this->settings['formPrefix']);
+        } else {
+            $this->sessionHandler->setSessionDataStorageKey('simpleForm');
+        }
     }
 
     /**
      * initialize StepHandler
-	 * @param string $step
+     * @param string $step
      */
     private function initializeStepHandler($step) {
         $this->stepHandler->setSteps($this->settings['steps']);
-		if($step) {
-			$this->stepHandler->setCurrentStep($step);
-		}
+        if($step) {
+            $this->stepHandler->setCurrentStep($step);
+        }
         $this->stepHandler->initialize();
     }
 
@@ -171,13 +171,13 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->finisherHandler->createFinishersFromFinishersConfiguration();
     }
 
-	/**
-	 * initialize PreProcessorHandler
-	 */
-	private function initializePreProcessorHandler() {
-		$this->preProcessorHandler->setPreProcessorsConfiguration($this->settings[$this->stepHandler->getCurrentStep()]['preProcessors']);
-		$this->preProcessorHandler->createPreProcessorsFromPreProcessorsConfiguration();
-	}
+    /**
+     * initialize PreProcessorHandler
+     */
+    private function initializePreProcessorHandler() {
+        $this->preProcessorHandler->setPreProcessorsConfiguration($this->settings[$this->stepHandler->getCurrentStep()]['preProcessors']);
+        $this->preProcessorHandler->createPreProcessorsFromPreProcessorsConfiguration();
+    }
 
     /**
      * initialize Csrf Protection
@@ -188,42 +188,42 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
     }
 
     /**
-	 * action displayForm
-	 * @param string $step
-	 * @param boolean $simulateSubmit
-	 *
-	 * @return void
-	 */
-	public function displayFormAction($step = NULL, $simulateSubmit = FALSE) {
-		$this->initialize($step);
-		$gpData = $this->formDataHandler->getGpData();
-		if(empty($gpData['formPrefix']) || $gpData['formPrefix'] == $this->formDataHandler->getFormPrefix()) {
-			if($step && !$simulateSubmit) {
-				$this->stepHandler->setCurrentStep($step);
-				$this->preProcessorHandler->callAllPreProcessors();
-				$this->stayOnCurrentStep();
-			} elseif($this->formDataHandler->formDataExists()) {
-			    if(!$this->csrfProtection->validateCsrfToken()) {
+     * action displayForm
+     * @param string $step
+     * @param boolean $simulateSubmit
+     *
+     * @return void
+     */
+    public function displayFormAction($step = NULL, $simulateSubmit = FALSE) {
+        $this->initialize($step);
+        $gpData = $this->formDataHandler->getGpData();
+        if(empty($gpData['formPrefix']) || $gpData['formPrefix'] == $this->formDataHandler->getFormPrefix()) {
+            if($step && !$simulateSubmit) {
+                $this->stepHandler->setCurrentStep($step);
+                $this->preProcessorHandler->callAllPreProcessors();
+                $this->stayOnCurrentStep();
+            } elseif($this->formDataHandler->formDataExists()) {
+                if(!$this->csrfProtection->validateCsrfToken()) {
                     $this->sessionHandler->clearSessionData();
                     $this->redirect("displayForm");
                 }
-				$this->validate();
-			} elseif($simulateSubmit && $step) {
-				$manipulatedGpData = $gpData;
-				$manipulatedGpData[$this->formDataHandler->getFormPrefix()][$step] = $this->sessionDataHandler->getFormDataFromCurrentStep();
-				$this->formDataHandler->setGpData($manipulatedGpData);
-				$this->validate();
-			} else {
-				$this->preProcessorHandler->callAllPreProcessors();
-				$this->stayOnCurrentStep();
-			}
-		} else {
-			$this->preProcessorHandler->callAllPreProcessors();
-			$this->stayOnCurrentStep();
-		}
-		$this->view->assign('stepHandler', $this->stepHandler);
-		$this->view->assign('sessionData', $this->sessionDataHandler->getFormData());
-	}
+                $this->validate();
+            } elseif($simulateSubmit && $step) {
+                $manipulatedGpData = $gpData;
+                $manipulatedGpData[$this->formDataHandler->getFormPrefix()][$step] = $this->sessionDataHandler->getFormDataFromCurrentStep();
+                $this->formDataHandler->setGpData($manipulatedGpData);
+                $this->validate();
+            } else {
+                $this->preProcessorHandler->callAllPreProcessors();
+                $this->stayOnCurrentStep();
+            }
+        } else {
+            $this->preProcessorHandler->callAllPreProcessors();
+            $this->stayOnCurrentStep();
+        }
+        $this->view->assign('stepHandler', $this->stepHandler);
+        $this->view->assign('sessionData', $this->sessionDataHandler->getFormData());
+    }
 
     /**
      * validate formData of current step
@@ -243,13 +243,13 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
                     $this->stayOnCurrentStepAfterFailedValidation();
                 } else {
                     if($this->stepHandler->formIsOnLastStep()) {
-						$this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
+                        $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
                         $this->callFinisher();
                         $this->view->assign('finished', 1);
                         $this->view->assign('formData', $this->formDataHandler->getFormDataFromCurrentStep());
-						if($this->settings['clearSessionDataWhenFinished'] === '1') {
-							$this->sessionHandler->clearSessionData();
-						}
+                        if($this->settings['clearSessionDataWhenFinished'] === '1') {
+                            $this->sessionHandler->clearSessionData();
+                        }
                     } else {
                         $this->goToNextStep();
                     }
@@ -269,7 +269,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      * stay on current Step
      */
     private function stayOnCurrentStep() {
-		$this->populateFreshestFormData($this->sessionDataHandler->getFormDataFromCurrentStep(), $this->formDataHandler->getFormDataFromCurrentStep());
+        $this->populateFreshestFormData($this->sessionDataHandler->getFormDataFromCurrentStep(), $this->formDataHandler->getFormDataFromCurrentStep());
         $this->view->assign('step', $this->stepHandler->getCurrentStep());
         $this->view->assign('token', $this->csrfProtection->generateCsrfToken());
     }
@@ -289,8 +289,8 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      */
     private function goToNextStep() {
         $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
-		$additionalParams = $this->getAdditionalParams();
-		$additionalParams['step'] = $this->stepHandler->getNextStep();
+        $additionalParams = $this->getAdditionalParams();
+        $additionalParams['step'] = $this->stepHandler->getNextStep();
         $this->view->assign('token', $this->csrfProtection->generateCsrfToken());
         $this->redirect("displayForm", NULL, NULL, $additionalParams);
     }
@@ -300,33 +300,33 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
      */
     private function goToPreviousStep() {
         $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
-		$additionalParams = $this->getAdditionalParams();
-		$additionalParams['step'] = $this->stepHandler->getPreviousStep();
+        $additionalParams = $this->getAdditionalParams();
+        $additionalParams['step'] = $this->stepHandler->getPreviousStep();
         $this->view->assign('token', $this->csrfProtection->generateCsrfToken());
-		$this->redirect("displayForm", NULL, NULL, $additionalParams);
+        $this->redirect("displayForm", NULL, NULL, $additionalParams);
     }
 
-	protected function populateFreshestFormData($sessionData, $formData) {
-		if($sessionData) {
-			$this->view->assign('formData', $sessionData);
-		} else {
-			$this->view->assign('formData', $formData);
-		}
-	}
+    protected function populateFreshestFormData($sessionData, $formData) {
+        if($sessionData) {
+            $this->view->assign('formData', $sessionData);
+        } else {
+            $this->view->assign('formData', $formData);
+        }
+    }
 
-	/**
-	 * Returns array with additional params defined in typoscript settings
-	 *
-	 * @return array
-	 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
-	 */
-	protected function getAdditionalParams() {
-		$additionalParams = array();
-		foreach($this->settings['additionalParams'] as $additionalParam) {
-			if($this->request->hasArgument($additionalParam));
-			$additionalParams[$additionalParam] = $this->request->getArgument($additionalParam);
-		}
-		return $additionalParams;
-	}
+    /**
+     * Returns array with additional params defined in typoscript settings
+     *
+     * @return array
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+     */
+    protected function getAdditionalParams() {
+        $additionalParams = array();
+        foreach($this->settings['additionalParams'] as $additionalParam) {
+            if($this->request->hasArgument($additionalParam));
+            $additionalParams[$additionalParam] = $this->request->getArgument($additionalParam);
+        }
+        return $additionalParams;
+    }
 }
 ?>

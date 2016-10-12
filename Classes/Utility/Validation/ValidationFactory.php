@@ -34,11 +34,11 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  */
 class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager = null;
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @inject
+     */
+    protected $objectManager = null;
 
     /**
      * @var string
@@ -61,22 +61,22 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
             case \CosmoCode\SimpleForm\Utility\Validation\IsAlphanumericValidation::VALIDATION_CODE:
                 $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsAlphanumericValidation');
                 break;
-			case \CosmoCode\SimpleForm\Utility\Validation\IsNumericValidation::VALIDATION_CODE:
-				$this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsNumericValidation');
-				break;
-			case \CosmoCode\SimpleForm\Utility\Validation\IsEmailValidation::VALIDATION_CODE:
-				$this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsEmailValidation');
-				break;
-			default:
-				try {
-					$validation = $this->objectManager->get($this->validationCode);
-					if(is_a($validation, '\CosmoCode\SimpleForm\Utility\Validation\AbstractValidation')) {
-						$this->validation = $validation;
-					}
-				} catch(\TYPO3\CMS\Core\FormProtection\Exception $e) {
-					//TODO:logging or similar
-				}
-				break;
+            case \CosmoCode\SimpleForm\Utility\Validation\IsNumericValidation::VALIDATION_CODE:
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsNumericValidation');
+                break;
+            case \CosmoCode\SimpleForm\Utility\Validation\IsEmailValidation::VALIDATION_CODE:
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsEmailValidation');
+                break;
+            default:
+                try {
+                    $validation = $this->objectManager->get($this->validationCode);
+                    if(is_a($validation, '\CosmoCode\SimpleForm\Utility\Validation\AbstractValidation')) {
+                        $this->validation = $validation;
+                    }
+                } catch(\TYPO3\CMS\Core\FormProtection\Exception $e) {
+                    //TODO:logging or similar
+                }
+                break;
         }
     }
 

@@ -56,27 +56,27 @@ class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface {
      */
     public function createInterceptorsFromInterceptorsConfiguration() {
         $this->resetInterceptors();
-		if(is_array($this->interceptorsConfiguration)) {
-			foreach($this->interceptorsConfiguration as $singleInterceptorConfiguration) {
-				/** @var $interceptor AbstractInterceptor */
-				try {
-					$interceptor = $this->objectManager->get($singleInterceptorConfiguration['interceptor']);
-					$interceptor->setInterceptorConfiguration($singleInterceptorConfiguration['conf']);
-					$this->interceptors[] = $interceptor;
-				} catch(\Exception $exception) {
+        if(is_array($this->interceptorsConfiguration)) {
+            foreach($this->interceptorsConfiguration as $singleInterceptorConfiguration) {
+                /** @var $interceptor AbstractInterceptor */
+                try {
+                    $interceptor = $this->objectManager->get($singleInterceptorConfiguration['interceptor']);
+                    $interceptor->setInterceptorConfiguration($singleInterceptorConfiguration['conf']);
+                    $this->interceptors[] = $interceptor;
+                } catch(\Exception $exception) {
 
-				}
-			}
-		}
+                }
+            }
+        }
     }
 
     /**
      * call finish function of all configured interceptors
      */
     public function callAllInterceptors() {
-		if(empty($this->interceptors)) {
-			return 0;
-		}
+        if(empty($this->interceptors)) {
+            return 0;
+        }
         foreach($this->interceptors as $interceptor) {
             /** @var $interceptor AbstractInterceptor */
             $interceptor->intercept();

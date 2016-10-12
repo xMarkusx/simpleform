@@ -38,11 +38,11 @@ class SetFormValuePreProcessor extends \CosmoCode\SimpleForm\PreProcessor\Abstra
      * preProcess
      */
     public function preProcess() {
-		$conf = $this->getPreProcessorConfiguration();
-		$step = $this->stepHandler->getCurrentStep();
-		$field = $conf['field'];
-		$value = $conf['value'];
-		$this->formDataHandler->setFormValueAtStep($field, $value, $step);
+        $conf = $this->getPreProcessorConfiguration();
+        $step = $this->stepHandler->getCurrentStep();
+        $field = $conf['field'];
+        $value = $conf['value'];
+        $this->formDataHandler->setFormValueAtStep($field, $value, $step);
     }
 }
 ?>

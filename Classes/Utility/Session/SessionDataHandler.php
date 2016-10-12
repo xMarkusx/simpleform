@@ -55,17 +55,17 @@ class SessionDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
         $this->sessionHandler->storeSessionData($currentFormData);
     }
 
-	/**
-	 * @param array $formData
-	 * @param string $step
-	 */
-	public function storeFormDataFromStep($formData, $step) {
-		$currentFormData = $this->sessionHandler->restoreFromSession();
-		if($this->stepHandler->checkIfStepIsValid($step)) {
-			$currentFormData[$step] = $formData;
-			$this->sessionHandler->storeSessionData($currentFormData);
-		}
-	}
+    /**
+     * @param array $formData
+     * @param string $step
+     */
+    public function storeFormDataFromStep($formData, $step) {
+        $currentFormData = $this->sessionHandler->restoreFromSession();
+        if($this->stepHandler->checkIfStepIsValid($step)) {
+            $currentFormData[$step] = $formData;
+            $this->sessionHandler->storeSessionData($currentFormData);
+        }
+    }
 
     /**
      * @return mixed

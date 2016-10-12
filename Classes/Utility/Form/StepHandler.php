@@ -74,14 +74,14 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
     }
 
     private function defineCurrentStep() {
-		if(!$this->currentStep) {
-			$gpData = $this->formDataHandler->getGpData();
-			if(!empty($gpData['currentStep'])) {
-				$this->currentStep = $gpData['currentStep'];
-			} else {
-				$this->currentStep = $this->firstStepName;
-			}
-		}
+        if(!$this->currentStep) {
+            $gpData = $this->formDataHandler->getGpData();
+            if(!empty($gpData['currentStep'])) {
+                $this->currentStep = $gpData['currentStep'];
+            } else {
+                $this->currentStep = $this->firstStepName;
+            }
+        }
     }
 
     private function defineDirection() {
@@ -169,32 +169,32 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
         return false;
     }
 
-	/**
-	 * @param string $step
-	 * @return bool
-	 */
-	public function checkIfStepIsValid($step) {
-		if(in_array($step, $this->steps, TRUE)) {
-			return TRUE;
-		}
-		return false;
-	}
+    /**
+     * @param string $step
+     * @return bool
+     */
+    public function checkIfStepIsValid($step) {
+        if(in_array($step, $this->steps, TRUE)) {
+            return TRUE;
+        }
+        return false;
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function currentStepIsFirst() {
-		if($this->currentStep === $this->steps[0]) {
-			return true;
-		}
-		return false;
-	}
+    /**
+     * @return bool
+     */
+    public function currentStepIsFirst() {
+        if($this->currentStep === $this->steps[0]) {
+            return true;
+        }
+        return false;
+    }
 
-	public function currentStepIsLast() {
-		if($this->currentStep === end($this->steps)) {
-			return true;
-		}
-		return false;
-	}
+    public function currentStepIsLast() {
+        if($this->currentStep === end($this->steps)) {
+            return true;
+        }
+        return false;
+    }
 }
 ?>

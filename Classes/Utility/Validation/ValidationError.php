@@ -39,15 +39,15 @@ class ValidationError {
      */
     private $formField;
 
-	/**
-	 * @var string
-	 */
-	private $eachFieldName = '';
+    /**
+     * @var string
+     */
+    private $eachFieldName = '';
 
-	/**
-	 * @var string
-	 */
-	private $eachIndex = '';
+    /**
+     * @var string
+     */
+    private $eachIndex = '';
 
     /**
      * @var mixed
@@ -59,10 +59,10 @@ class ValidationError {
      */
     private $validationCode;
 
-	/**
-	 * @var string
-	 */
-	protected $customErrorText;
+    /**
+     * @var string
+     */
+    protected $customErrorText;
 
     /**
      * @param mixed $formField
@@ -106,46 +106,46 @@ class ValidationError {
         return $this->validationCode;
     }
 
-	/**
-	 * @param string $customErrorText
-	 */
-	public function setCustomErrorText($customErrorText) {
-		$this->customErrorText = $customErrorText;
-	}
+    /**
+     * @param string $customErrorText
+     */
+    public function setCustomErrorText($customErrorText) {
+        $this->customErrorText = $customErrorText;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getCustomErrorText() {
-		return $this->customErrorText;
-	}
+    /**
+     * @return string
+     */
+    public function getCustomErrorText() {
+        return $this->customErrorText;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getEachFieldName() {
-		return $this->eachFieldName;
-	}
+    /**
+     * @return string
+     */
+    public function getEachFieldName() {
+        return $this->eachFieldName;
+    }
 
-	/**
-	 * @param string $eachFieldName
-	 */
-	public function setEachFieldName($eachFieldName) {
-		$this->eachFieldName = $eachFieldName;
-	}
+    /**
+     * @param string $eachFieldName
+     */
+    public function setEachFieldName($eachFieldName) {
+        $this->eachFieldName = $eachFieldName;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getEachIndex() {
-		return $this->eachIndex;
-	}
+    /**
+     * @return string
+     */
+    public function getEachIndex() {
+        return $this->eachIndex;
+    }
 
-	/**
-	 * @param string $eachIndex
-	 */
-	public function setEachIndex($eachIndex) {
-		$this->eachIndex = $eachIndex;
-	}
+    /**
+     * @param string $eachIndex
+     */
+    public function setEachIndex($eachIndex) {
+        $this->eachIndex = $eachIndex;
+    }
 }
 ?>

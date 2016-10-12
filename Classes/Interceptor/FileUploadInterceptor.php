@@ -100,14 +100,14 @@ class FileUploadInterceptor extends AbstractInterceptor {
      * check current file type
      */
     private function checkFileType() {
-		if(!file_exists($this->currentFile['tmp_name']) && !empty($this->currentFile['name'])) {
-			$fileChecked = true;
-		} else {
-			$fileChecked = false;
-			$fileInfo = finfo_open(FILEINFO_MIME_TYPE);
-			$mimeType = finfo_file($fileInfo, $this->currentFile['tmp_name']);
-			finfo_close($fileInfo);
-		}
+        if(!file_exists($this->currentFile['tmp_name']) && !empty($this->currentFile['name'])) {
+            $fileChecked = true;
+        } else {
+            $fileChecked = false;
+            $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($fileInfo, $this->currentFile['tmp_name']);
+            finfo_close($fileInfo);
+        }
 
         if($fileChecked || in_array($mimeType, explode(',', $this->currentFileConfiguration['allowedMimeTypes']))) {
             return true;
@@ -154,28 +154,28 @@ class FileUploadInterceptor extends AbstractInterceptor {
      * store uploaded files
      */
     private function storeCurrentFile() {
-		$this->createUploadFolderIfNotExisting();
-		$uploadFolder = $this->interceptorConfiguration['uploadFolder'].$this->formDataHandler->getFormValue('uploadFolderHash');
+        $this->createUploadFolderIfNotExisting();
+        $uploadFolder = $this->interceptorConfiguration['uploadFolder'].$this->formDataHandler->getFormValue('uploadFolderHash');
         if ($_FILES['tx_simpleform_simpleform']) {
             $fileName = $this->basicFileUtility->getUniqueName($this->currentFile['name'], \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($uploadFolder));
             \TYPO3\CMS\Core\Utility\GeneralUtility::upload_copy_move($this->currentFile['tmp_name'], $fileName);
         }
     }
 
-	protected function createUploadFolderIfNotExisting() {
-		$this->generateUploadFolderHash();
-		if (!file_exists($this->interceptorConfiguration['uploadFolder'].$this->formDataHandler->getFormValue('uploadFolderHash'))) {
-			mkdir($this->interceptorConfiguration['uploadFolder'].$this->formDataHandler->getFormValue('uploadFolderHash'), 0777, true);
-		}
-	}
+    protected function createUploadFolderIfNotExisting() {
+        $this->generateUploadFolderHash();
+        if (!file_exists($this->interceptorConfiguration['uploadFolder'].$this->formDataHandler->getFormValue('uploadFolderHash'))) {
+            mkdir($this->interceptorConfiguration['uploadFolder'].$this->formDataHandler->getFormValue('uploadFolderHash'), 0777, true);
+        }
+    }
 
-	protected function generateUploadFolderHash() {
-		if(!$this->formDataHandler->getFormValue('uploadFolderHash')) {
-			$randomString = rand(0,100000).'--'.time();
-			$randomHash = md5($randomString);
-			$this->formDataHandler->setFormValue('uploadFolderHash', $randomHash);
-		}
-	}
+    protected function generateUploadFolderHash() {
+        if(!$this->formDataHandler->getFormValue('uploadFolderHash')) {
+            $randomString = rand(0,100000).'--'.time();
+            $randomHash = md5($randomString);
+            $this->formDataHandler->setFormValue('uploadFolderHash', $randomHash);
+        }
+    }
 
     /**
      * add validation error

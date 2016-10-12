@@ -73,7 +73,7 @@ class SessionHandler implements \TYPO3\CMS\Core\SingletonInterface {
      */
     public function clearSessionData() {
         $GLOBALS['TSFE']->fe_user->setKey('ses', $this->sessionDataStorageKey, NULL);
-		$GLOBALS['TSFE']->fe_user->storeSessionData();
+        $GLOBALS['TSFE']->fe_user->storeSessionData();
     }
 }
 ?>
