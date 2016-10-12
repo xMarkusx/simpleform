@@ -177,7 +177,7 @@ class StepHandler implements \TYPO3\CMS\Core\SingletonInterface {
 		if(in_array($step, $this->steps, TRUE)) {
 			return TRUE;
 		}
-		return FLASE;
+		return false;
 	}
 
 	/**
