@@ -95,6 +95,12 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	private $preProcessorHandler;
 
     /**
+     * @var \CosmoCode\SimpleForm\Utility\Security\CsrfProtection
+     * @inject
+     */
+    private $csrfProtection = null;
+
+    /**
      * initialize
 	 * @param string $step
      */
@@ -106,6 +112,9 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->initializeInterceptorHandler();
         $this->initializeFinisherHandler();
 		$this->initializePreProcessorHandler();
+        if(array_key_exists('activateCsrfProtection', $this->settings) && $this->settings['activateCsrfProtection'] === '1') {
+            $this->initializeCsrfProtection();
+        }
     }
 
     /**
@@ -171,6 +180,14 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 	}
 
     /**
+     * initialize Csrf Protection
+     */
+    private function initializeCsrfProtection() {
+        $this->csrfProtection->setSecret($this->settings['secret']);
+        $this->csrfProtection->activate();
+    }
+
+    /**
 	 * action displayForm
 	 * @param string $step
 	 * @param boolean $simulateSubmit
@@ -186,6 +203,10 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
 				$this->preProcessorHandler->callAllPreProcessors();
 				$this->stayOnCurrentStep();
 			} elseif($this->formDataHandler->formDataExists()) {
+			    if(!$this->csrfProtection->validateCsrfToken()) {
+                    $this->sessionHandler->clearSessionData();
+                    $this->redirect("displayForm");
+                }
 				$this->validate();
 			} elseif($simulateSubmit && $step) {
 				$manipulatedGpData = $gpData;
@@ -250,6 +271,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
     private function stayOnCurrentStep() {
 		$this->populateFreshestFormData($this->sessionDataHandler->getFormDataFromCurrentStep(), $this->formDataHandler->getFormDataFromCurrentStep());
         $this->view->assign('step', $this->stepHandler->getCurrentStep());
+        $this->view->assign('token', $this->csrfProtection->generateCsrfToken());
     }
 
     /**
@@ -259,6 +281,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->view->assign('step', $this->stepHandler->getCurrentStep());
         $this->view->assign('formData', $this->formDataHandler->getFormDataFromCurrentStep());
         $this->view->assign('validationErrors', $this->validationErrorHandler->getValidationErrorsFromCurrentStep());
+        $this->view->assign('token', $this->csrfProtection->generateCsrfToken());
     }
 
     /**
@@ -268,6 +291,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
 		$additionalParams = $this->getAdditionalParams();
 		$additionalParams['step'] = $this->stepHandler->getNextStep();
+        $this->view->assign('token', $this->csrfProtection->generateCsrfToken());
         $this->redirect("displayForm", NULL, NULL, $additionalParams);
     }
 
@@ -278,6 +302,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController 
         $this->sessionDataHandler->storeFormDataFromCurrentStep($this->formDataHandler->getFormDataFromCurrentStep());
 		$additionalParams = $this->getAdditionalParams();
 		$additionalParams['step'] = $this->stepHandler->getPreviousStep();
+        $this->view->assign('token', $this->csrfProtection->generateCsrfToken());
 		$this->redirect("displayForm", NULL, NULL, $additionalParams);
     }
 
