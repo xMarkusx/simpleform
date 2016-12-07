@@ -55,6 +55,12 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
      */
     private function defineValidationType() {
         switch($this->validationCode) {
+            case \CosmoCode\SimpleForm\Utility\Validation\GreaterThanOrEqualValidation::VALIDATION_CODE:
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\GreaterThanOrEqualValidation');
+                break;
+            case \CosmoCode\SimpleForm\Utility\Validation\GreaterThanValidation::VALIDATION_CODE:
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\GreaterThanValidation');
+                break;
             case \CosmoCode\SimpleForm\Utility\Validation\IsNotEmptyValidation::VALIDATION_CODE:
                 $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsNotEmptyValidation');
                 break;
@@ -66,6 +72,12 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
                 break;
             case \CosmoCode\SimpleForm\Utility\Validation\IsEmailValidation::VALIDATION_CODE:
                 $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\IsEmailValidation');
+                break;
+            case \CosmoCode\SimpleForm\Utility\Validation\LessThanOrEqualValidation::VALIDATION_CODE:
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\LessThanOrEqualValidation');
+                break;
+            case \CosmoCode\SimpleForm\Utility\Validation\LessThanValidation::VALIDATION_CODE:
+                $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\LessThanValidation');
                 break;
             case \CosmoCode\SimpleForm\Utility\Validation\MaxLengthValidation::VALIDATION_CODE:
                 $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\MaxLengthValidation');
