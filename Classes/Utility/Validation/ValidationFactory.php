@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
+class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface
+{
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
@@ -53,8 +54,9 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * define the type of validation
      */
-    private function defineValidationType() {
-        switch($this->validationCode) {
+    private function defineValidationType()
+    {
+        switch ($this->validationCode) {
             case \CosmoCode\SimpleForm\Utility\Validation\GreaterThanOrEqualValidation::VALIDATION_CODE:
                 $this->validation = $this->objectManager->get('CosmoCode\\SimpleForm\\Utility\\Validation\\GreaterThanOrEqualValidation');
                 break;
@@ -91,10 +93,10 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
             default:
                 try {
                     $validation = $this->objectManager->get($this->validationCode);
-                    if(is_a($validation, '\CosmoCode\SimpleForm\Utility\Validation\AbstractValidation')) {
+                    if (is_a($validation, '\CosmoCode\SimpleForm\Utility\Validation\AbstractValidation')) {
                         $this->validation = $validation;
                     }
-                } catch(\TYPO3\CMS\Core\FormProtection\Exception $e) {
+                } catch (\TYPO3\CMS\Core\FormProtection\Exception $e) {
                     //TODO:logging or similar
                 }
                 break;
@@ -104,21 +106,24 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @param \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation $validation
      */
-    public function setValidation($validation) {
+    public function setValidation($validation)
+    {
         $this->validation = $validation;
     }
 
     /**
      * @return \CosmoCode\SimpleForm\Utility\Validation\AbstractValidation
      */
-    public function getValidation() {
+    public function getValidation()
+    {
         return $this->validation;
     }
 
     /**
      * @param string $validationCode
      */
-    public function setValidationCode($validationCode) {
+    public function setValidationCode($validationCode)
+    {
         $this->validationCode = $validationCode;
         $this->defineValidationType();
     }
@@ -126,9 +131,8 @@ class ValidationFactory implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @return string
      */
-    public function getValidationCode() {
+    public function getValidationCode()
+    {
         return $this->validationCode;
     }
-
 }
-?>

@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Session;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class SessionHandler implements \TYPO3\CMS\Core\SingletonInterface {
+class SessionHandler implements \TYPO3\CMS\Core\SingletonInterface
+{
 
     /**
      * @var string
@@ -42,7 +43,8 @@ class SessionHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @param string $sessionDataStorageKey
      */
-    public function setSessionDataStorageKey($sessionDataStorageKey) {
+    public function setSessionDataStorageKey($sessionDataStorageKey)
+    {
         $this->sessionDataStorageKey = $sessionDataStorageKey;
     }
 
@@ -52,7 +54,8 @@ class SessionHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * @return mixed
      *
      */
-    public function restoreFromSession() {
+    public function restoreFromSession()
+    {
         return $GLOBALS['TSFE']->fe_user->getKey('ses', $this->sessionDataStorageKey);
     }
 
@@ -61,7 +64,8 @@ class SessionHandler implements \TYPO3\CMS\Core\SingletonInterface {
      *
      * @param mixed $data
      */
-    public function storeSessionData($data) {
+    public function storeSessionData($data)
+    {
         $GLOBALS['TSFE']->fe_user->setKey('ses', $this->sessionDataStorageKey, $data);
         $GLOBALS['TSFE']->fe_user->storeSessionData();
     }
@@ -71,9 +75,9 @@ class SessionHandler implements \TYPO3\CMS\Core\SingletonInterface {
      *
      * @return void
      */
-    public function clearSessionData() {
-        $GLOBALS['TSFE']->fe_user->setKey('ses', $this->sessionDataStorageKey, NULL);
+    public function clearSessionData()
+    {
+        $GLOBALS['TSFE']->fe_user->setKey('ses', $this->sessionDataStorageKey, null);
         $GLOBALS['TSFE']->fe_user->storeSessionData();
     }
 }
-?>

@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class RegexValidation extends AbstractValidation {
+class RegexValidation extends AbstractValidation
+{
 
     const VALIDATION_CODE = 'regex';
 
@@ -40,7 +41,8 @@ class RegexValidation extends AbstractValidation {
      * @param mixed $value
      * @return bool
      */
-    public function checkValue($value) {
+    public function checkValue($value)
+    {
         $this->value = $value;
         return $this->validate();
     }
@@ -48,11 +50,12 @@ class RegexValidation extends AbstractValidation {
     /**
      * @return boolean
      */
-    protected function validate() {
-        if($this->value === '') {
+    protected function validate()
+    {
+        if ($this->value === '') {
             return true;
         }
-        if(preg_match($this->conf['pattern'], $this->value) !== 1) {
+        if (preg_match($this->conf['pattern'], $this->value) !== 1) {
             return false;
         }
         return true;
@@ -61,8 +64,8 @@ class RegexValidation extends AbstractValidation {
     /**
      * @return string
      */
-    public function getValidationCode() {
+    public function getValidationCode()
+    {
         return self::VALIDATION_CODE;
     }
 }
-?>

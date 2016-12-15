@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class ValidationErrorHandler implements \TYPO3\CMS\Core\SingletonInterface {
+class ValidationErrorHandler implements \TYPO3\CMS\Core\SingletonInterface
+{
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Form\StepHandler
@@ -48,22 +49,25 @@ class ValidationErrorHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @param array $validationErrors
      */
-    public function setValidationErrors($validationErrors) {
+    public function setValidationErrors($validationErrors)
+    {
         $this->validationErrors = $validationErrors;
     }
 
     /**
      * @return array
      */
-    public function getValidationErrors() {
+    public function getValidationErrors()
+    {
         return $this->validationErrors;
     }
 
     /**
      * @param \CosmoCode\SimpleForm\Utility\Validation\ValidationError $validationError
      */
-    public function addValidationError($validationError) {
-        if($validationError->getEachFieldName() && $validationError->getEachIndex()) {
+    public function addValidationError($validationError)
+    {
+        if ($validationError->getEachFieldName() && $validationError->getEachIndex()) {
             $this->validationErrors[$this->stepHandler->getCurrentStep()][$validationError->getFormField()][$validationError->getEachIndex()][$validationError->getEachFieldName()][] = $validationError;
         } else {
             $this->validationErrors[$this->stepHandler->getCurrentStep()][$validationError->getFormField()][] = $validationError;
@@ -73,18 +77,19 @@ class ValidationErrorHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @return mixed
      */
-    public function getValidationErrorsFromCurrentStep() {
+    public function getValidationErrorsFromCurrentStep()
+    {
         return $this->validationErrors[$this->stepHandler->getCurrentStep()];
     }
 
     /**
      * @return bool
      */
-    public function validationErrorsExists() {
-        if(empty($this->validationErrors)) {
+    public function validationErrorsExists()
+    {
+        if (empty($this->validationErrors)) {
             return false;
         }
         return true;
     }
 }
-?>

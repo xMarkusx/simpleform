@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class MaxLengthValidation extends AbstractValidation {
+class MaxLengthValidation extends AbstractValidation
+{
 
     const VALIDATION_CODE = 'max_length';
 
@@ -40,7 +41,8 @@ class MaxLengthValidation extends AbstractValidation {
      * @param mixed $value
      * @return bool
      */
-    public function checkValue($value) {
+    public function checkValue($value)
+    {
         $this->value = $value;
         return $this->validate();
     }
@@ -48,8 +50,9 @@ class MaxLengthValidation extends AbstractValidation {
     /**
      * @return boolean
      */
-    protected function validate() {
-        if(strlen(strval($this->value)) > intval($this->conf['length'])) {
+    protected function validate()
+    {
+        if (strlen(strval($this->value)) > intval($this->conf['length'])) {
             return false;
         }
         return true;
@@ -58,8 +61,8 @@ class MaxLengthValidation extends AbstractValidation {
     /**
      * @return string
      */
-    public function getValidationCode() {
+    public function getValidationCode()
+    {
         return self::VALIDATION_CODE;
     }
 }
-?>

@@ -31,7 +31,8 @@ namespace CosmoCode\SimpleForm\Utility\Security;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class CsrfProtection {
+class CsrfProtection
+{
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
@@ -52,7 +53,8 @@ class CsrfProtection {
     /**
      * @return string
      */
-    public function generateCsrfToken() {
+    public function generateCsrfToken()
+    {
         $token = sha1($this->secret . time() . \TYPO3\CMS\Core\Utility\GeneralUtility::generateRandomBytes(20));
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'token', $token);
         return $token;
@@ -61,8 +63,9 @@ class CsrfProtection {
     /**
      * @return bool
      */
-    public function validateCsrfToken() {
-        if($this->isActive()) {
+    public function validateCsrfToken()
+    {
+        if ($this->isActive()) {
             $csrfToken = $GLOBALS['TSFE']->fe_user->getKey('ses', 'token');
             $gpData = $this->formDataHandler->getGpData();
             $csrfTokenToBeTested = $gpData['token'];
@@ -76,28 +79,31 @@ class CsrfProtection {
     /**
      * @return string
      */
-    public function getSecret() {
+    public function getSecret()
+    {
         return $this->secret;
     }
 
     /**
      * @param string $secret
      */
-    public function setSecret($secret) {
+    public function setSecret($secret)
+    {
         $this->secret = $secret;
     }
 
-    public function activate() {
+    public function activate()
+    {
         $this->active = true;
     }
 
-    public function deactivate() {
+    public function deactivate()
+    {
         $this->active = false;
     }
 
-    public function isActive() {
+    public function isActive()
+    {
         return $this->active;
     }
-
 }
-?>

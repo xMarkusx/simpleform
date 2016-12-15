@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Form;
 * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
 *
 */
-class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
+class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface
+{
 
     /**
      * @var array
@@ -64,42 +65,48 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @param boolean $formDataIsManipulated
      */
-    public function setFormDataIsManipulated($formDataIsManipulated) {
+    public function setFormDataIsManipulated($formDataIsManipulated)
+    {
         $this->formDataIsManipulated = $formDataIsManipulated;
     }
 
     /**
      * @return boolean
      */
-    public function getFormDataIsManipulated() {
+    public function getFormDataIsManipulated()
+    {
         return $this->formDataIsManipulated;
     }
 
     /**
      * @param string $formPrefix
      */
-    public function setFormPrefix($formPrefix) {
+    public function setFormPrefix($formPrefix)
+    {
         $this->formPrefix = $formPrefix;
     }
 
     /**
      * @return string
      */
-    public function getFormPrefix() {
+    public function getFormPrefix()
+    {
         return $this->formPrefix;
     }
 
     /**
      * @param array $gpData
      */
-    public function setGpData($gpData) {
+    public function setGpData($gpData)
+    {
         $this->gpData = $gpData;
     }
 
     /**
      * @return array
      */
-    public function getGpData() {
+    public function getGpData()
+    {
         return $this->gpData;
     }
 
@@ -108,7 +115,8 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
      *
      * @return mixed
      */
-    public function getFormValue($arrayKey) {
+    public function getFormValue($arrayKey)
+    {
         return $this->gpData[$this->formPrefix][$this->stepHandler->getCurrentStep()][$arrayKey];
     }
 
@@ -116,7 +124,8 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * @param $arrayKey
      * @param $formValue
      */
-    public function setFormValue($arrayKey, $formValue) {
+    public function setFormValue($arrayKey, $formValue)
+    {
         $this->gpData[$this->formPrefix][$this->stepHandler->getCurrentStep()][$arrayKey] = $formValue;
         $this->formDataIsManipulated = true;
         $sessionDataFromCurrentStep = $this->sessionDataHandler->getFormDataFromCurrentStep();
@@ -130,12 +139,13 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
      *
      * @return mixed
      */
-    public function getFormValueAtStep($arrayKey, $step) {
-        if($this->stepHandler->checkIfStepIsValid($step)) {
+    public function getFormValueAtStep($arrayKey, $step)
+    {
+        if ($this->stepHandler->checkIfStepIsValid($step)) {
             $stepData = $this->sessionDataHandler->getFormDataFromStep($step);
             return $stepData[$arrayKey];
         }
-        return NULL;
+        return null;
     }
 
     /**
@@ -143,8 +153,9 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * @param mixed $formValue
      * @param string $step
      */
-    public function setFormValueAtStep($arrayKey, $formValue, $step) {
-        if($this->stepHandler->checkIfStepIsValid($step)) {
+    public function setFormValueAtStep($arrayKey, $formValue, $step)
+    {
+        if ($this->stepHandler->checkIfStepIsValid($step)) {
             $stepData = $this->sessionDataHandler->getFormDataFromStep($step);
             $stepData[$arrayKey] = $formValue;
             $this->formDataIsManipulated = true;
@@ -155,8 +166,9 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @return bool
      */
-    public function formDataExists() {
-        if(!empty($this->gpData[$this->formPrefix])) {
+    public function formDataExists()
+    {
+        if (!empty($this->gpData[$this->formPrefix])) {
             return true;
         }
         return false;
@@ -165,8 +177,8 @@ class FormDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @return array
      */
-    public function getFormDataFromCurrentStep() {
+    public function getFormDataFromCurrentStep()
+    {
         return $this->gpData[$this->formPrefix][$this->stepHandler->getCurrentStep()];
     }
 }
-?>

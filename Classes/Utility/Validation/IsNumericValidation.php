@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class IsNumericValidation extends AbstractValidation {
+class IsNumericValidation extends AbstractValidation
+{
 
     const VALIDATION_CODE = 'numeric';
 
@@ -40,7 +41,8 @@ class IsNumericValidation extends AbstractValidation {
      * @param mixed $value
      * @return bool
      */
-    public function checkValue($value) {
+    public function checkValue($value)
+    {
         $this->value = $value;
         return $this->validate();
     }
@@ -48,8 +50,9 @@ class IsNumericValidation extends AbstractValidation {
     /**
      * @return boolean
      */
-    protected function validate() {
-        if(is_string($this->value) && preg_match('/^[0-9]*$/i', $this->value)) {
+    protected function validate()
+    {
+        if (is_string($this->value) && preg_match('/^[0-9]*$/i', $this->value)) {
             return true;
         }
         return false;
@@ -58,8 +61,8 @@ class IsNumericValidation extends AbstractValidation {
     /**
      * @return string
      */
-    public function getValidationCode() {
+    public function getValidationCode()
+    {
         return self::VALIDATION_CODE;
     }
 }
-?>

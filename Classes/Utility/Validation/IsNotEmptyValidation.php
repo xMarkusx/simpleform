@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class IsNotEmptyValidation extends AbstractValidation {
+class IsNotEmptyValidation extends AbstractValidation
+{
 
     const VALIDATION_CODE = 'not_empty';
 
@@ -40,7 +41,8 @@ class IsNotEmptyValidation extends AbstractValidation {
      * @param mixed $value
      * @return bool
      */
-    public function checkValue($value) {
+    public function checkValue($value)
+    {
         $this->value = $value;
         return $this->validate();
     }
@@ -49,18 +51,19 @@ class IsNotEmptyValidation extends AbstractValidation {
      * TODO: Refactor
      * @return boolean
      */
-    protected function validate() {
+    protected function validate()
+    {
         $acceptZeroString = $this->conf['acceptZeroString'];
-        if(is_array($this->value)) {
-            foreach($this->value as $item) {
-                if(!empty($item) || ($acceptZeroString && $item === '0')) {
+        if (is_array($this->value)) {
+            foreach ($this->value as $item) {
+                if (!empty($item) || ($acceptZeroString && $item === '0')) {
                     return true;
                 }
             }
             return false;
         }
 
-        if(!empty($this->value) || ($acceptZeroString && $this->value === '0')) {
+        if (!empty($this->value) || ($acceptZeroString && $this->value === '0')) {
             return true;
         }
         return false;
@@ -69,8 +72,8 @@ class IsNotEmptyValidation extends AbstractValidation {
     /**
      * @return string
      */
-    public function getValidationCode() {
+    public function getValidationCode()
+    {
         return self::VALIDATION_CODE;
     }
 }
-?>

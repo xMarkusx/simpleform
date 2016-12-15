@@ -1,5 +1,5 @@
 <?php
-if(!defined('TYPO3_MODE')){
+if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
@@ -40,4 +40,3 @@ $TCA['tt_content']['types'][$typeName] = array(
             --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.visibility;visibility,
             --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.access;access'
 );
-?>

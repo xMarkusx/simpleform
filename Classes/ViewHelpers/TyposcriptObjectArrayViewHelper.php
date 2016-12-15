@@ -28,16 +28,18 @@ namespace CosmoCode\SimpleForm\ViewHelpers;
 /**
  * returns array from given string of ce: typoscript_object
  */
-class TyposcriptObjectArrayViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class TyposcriptObjectArrayViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
 
     /**
      * @param string $string
      * @return array
      */
-    public function render($string) {
+    public function render($string)
+    {
         $output = array();
         $items = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $string);
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $keyValue = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(':', $item);
             $output[$keyValue[0]] = $keyValue[1];
         }
@@ -45,5 +47,3 @@ class TyposcriptObjectArrayViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\A
         return $output;
     }
 }
-
-?>

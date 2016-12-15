@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class LessThanValidation extends AbstractValidation {
+class LessThanValidation extends AbstractValidation
+{
 
     const VALIDATION_CODE = 'less_than';
 
@@ -40,7 +41,8 @@ class LessThanValidation extends AbstractValidation {
      * @param mixed $value
      * @return bool
      */
-    public function checkValue($value) {
+    public function checkValue($value)
+    {
         $this->value = $value;
         return $this->validate();
     }
@@ -48,15 +50,16 @@ class LessThanValidation extends AbstractValidation {
     /**
      * @return boolean
      */
-    protected function validate() {
+    protected function validate()
+    {
         return ($this->value < intval($this->conf['value']));
     }
 
     /**
      * @return string
      */
-    public function getValidationCode() {
+    public function getValidationCode()
+    {
         return self::VALIDATION_CODE;
     }
 }
-?>

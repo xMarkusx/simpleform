@@ -10,7 +10,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class TypoScript {
+class TypoScript
+{
 
     /**
      * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
@@ -23,7 +24,8 @@ class TypoScript {
      * @param $arr mixed The input value (usually an array) to parse and process. Must be a plain array
      *                   (e.g. returned by TypoScriptService::convertTypoScriptArrayToPlainArray().
      */
-    static public function processTypoScriptSetupRecursive(&$arr) {
+    public static function processTypoScriptSetupRecursive(&$arr)
+    {
         if (is_array($arr)) {
             if (isset($arr['_typoScriptNodeValue'])) {
                 $typoScriptArray = self::getTypoScriptService()->convertPlainArrayToTypoScriptArray($arr);
@@ -39,14 +41,16 @@ class TypoScript {
     /**
      * @return \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer
      */
-    static protected function getContentObject() {
+    protected static function getContentObject()
+    {
         return $GLOBALS['TSFE']->cObj;
     }
 
     /**
      * @return \TYPO3\CMS\Extbase\Service\TypoScriptService
      */
-    static protected function getTypoScriptService() {
+    protected static function getTypoScriptService()
+    {
         if (!self::$typoScriptService) {
             self::$typoScriptService = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Service\\TypoScriptService');
         }

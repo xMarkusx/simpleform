@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class IsEmailValidation extends AbstractValidation {
+class IsEmailValidation extends AbstractValidation
+{
 
     const VALIDATION_CODE = 'email';
 
@@ -40,7 +41,8 @@ class IsEmailValidation extends AbstractValidation {
      * @param mixed $value
      * @return bool
      */
-    public function checkValue($value) {
+    public function checkValue($value)
+    {
         $this->value = $value;
         return $this->validate();
     }
@@ -48,11 +50,12 @@ class IsEmailValidation extends AbstractValidation {
     /**
      * @return boolean
      */
-    protected function validate() {
-        if($this->value === '') {
+    protected function validate()
+    {
+        if ($this->value === '') {
             return true;
         }
-        if(\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($this->value)) {
+        if (\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($this->value)) {
             return true;
         }
         return false;
@@ -61,8 +64,8 @@ class IsEmailValidation extends AbstractValidation {
     /**
      * @return string
      */
-    public function getValidationCode() {
+    public function getValidationCode()
+    {
         return self::VALIDATION_CODE;
     }
 }
-?>

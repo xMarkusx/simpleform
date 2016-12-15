@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Interceptor;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class FileUploadInterceptor extends AbstractInterceptor {
+class FileUploadInterceptor extends AbstractInterceptor
+{
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
@@ -58,7 +59,8 @@ class FileUploadInterceptor extends AbstractInterceptor {
     /**
      * intercept
      */
-    public function intercept() {
+    public function intercept()
+    {
         $this->basicFileUtility = $this->objectManager->get('TYPO3\CMS\Core\Utility\File\BasicFileUtility');
         $this->processUploadFields();
     }
@@ -66,12 +68,13 @@ class FileUploadInterceptor extends AbstractInterceptor {
     /**
      * process upload fields
      */
-    private function processUploadFields() {
+    private function processUploadFields()
+    {
         $fileConfigurations = $this->interceptorConfiguration['files'];
-        foreach($fileConfigurations as $fileConfiguration) {
+        foreach ($fileConfigurations as $fileConfiguration) {
             $this->currentFileConfiguration = $fileConfiguration;
             $this->currentFile = $this->formDataHandler->getFormValue($fileConfiguration['formName']);
-            if($this->checkCurrentFile()) {
+            if ($this->checkCurrentFile()) {
                 $this->storeCurrentFile();
             }
         }
@@ -80,15 +83,16 @@ class FileUploadInterceptor extends AbstractInterceptor {
     /**
      * check file
      */
-    private function checkCurrentFile() {
-        if($this->fileIsSelected()) {
-            if($this->checkFileType() && $this->checkFileSize()) {
+    private function checkCurrentFile()
+    {
+        if ($this->fileIsSelected()) {
+            if ($this->checkFileType() && $this->checkFileSize()) {
                 return true;
             }
             $this->formDataHandler->setFormValue($this->currentFileConfiguration['formName'], null);
             return false;
         } else {
-            if($this->fileIsRequired()) {
+            if ($this->fileIsRequired()) {
                 $this->addFileErrorToValidationErrors('file_required');
                 return false;
             }
@@ -99,8 +103,9 @@ class FileUploadInterceptor extends AbstractInterceptor {
     /**
      * check current file type
      */
-    private function checkFileType() {
-        if(!file_exists($this->currentFile['tmp_name']) && !empty($this->currentFile['name'])) {
+    private function checkFileType()
+    {
+        if (!file_exists($this->currentFile['tmp_name']) && !empty($this->currentFile['name'])) {
             $fileChecked = true;
         } else {
             $fileChecked = false;
@@ -109,7 +114,7 @@ class FileUploadInterceptor extends AbstractInterceptor {
             finfo_close($fileInfo);
         }
 
-        if($fileChecked || in_array($mimeType, explode(',', $this->currentFileConfiguration['allowedMimeTypes']))) {
+        if ($fileChecked || in_array($mimeType, explode(',', $this->currentFileConfiguration['allowedMimeTypes']))) {
             return true;
         }
         $this->addFileErrorToValidationErrors('no_valid_file_type');
@@ -120,8 +125,9 @@ class FileUploadInterceptor extends AbstractInterceptor {
      * check current file size
      * @return bool
      */
-    private function checkFileSize() {
-        if($this->currentFile['size'] <= $this->currentFileConfiguration['maxSize']) {
+    private function checkFileSize()
+    {
+        if ($this->currentFile['size'] <= $this->currentFileConfiguration['maxSize']) {
             return true;
         }
         $this->addFileErrorToValidationErrors('no_valid_file_size');
@@ -132,8 +138,9 @@ class FileUploadInterceptor extends AbstractInterceptor {
      * return required state
      * @return bool
      */
-    private function fileIsRequired() {
-        if(empty($this->currentFileConfiguration['required'])) {
+    private function fileIsRequired()
+    {
+        if (empty($this->currentFileConfiguration['required'])) {
             return false;
         }
         return true;
@@ -143,8 +150,9 @@ class FileUploadInterceptor extends AbstractInterceptor {
      * return true if any file is selected for upload, else return false
      * @return bool
      */
-    private function fileIsSelected() {
-        if(empty($this->currentFile['name'])) {
+    private function fileIsSelected()
+    {
+        if (empty($this->currentFile['name'])) {
             return false;
         }
         return true;
@@ -153,7 +161,8 @@ class FileUploadInterceptor extends AbstractInterceptor {
     /**
      * store uploaded files
      */
-    private function storeCurrentFile() {
+    private function storeCurrentFile()
+    {
         $this->createUploadFolderIfNotExisting();
         $uploadFolder = $this->interceptorConfiguration['uploadFolder'].$this->formDataHandler->getFormValue('uploadFolderHash');
         if ($_FILES['tx_simpleform_simpleform']) {
@@ -162,16 +171,18 @@ class FileUploadInterceptor extends AbstractInterceptor {
         }
     }
 
-    protected function createUploadFolderIfNotExisting() {
+    protected function createUploadFolderIfNotExisting()
+    {
         $this->generateUploadFolderHash();
         if (!file_exists($this->interceptorConfiguration['uploadFolder'].$this->formDataHandler->getFormValue('uploadFolderHash'))) {
             mkdir($this->interceptorConfiguration['uploadFolder'].$this->formDataHandler->getFormValue('uploadFolderHash'), 0777, true);
         }
     }
 
-    protected function generateUploadFolderHash() {
-        if(!$this->formDataHandler->getFormValue('uploadFolderHash')) {
-            $randomString = rand(0,100000).'--'.time();
+    protected function generateUploadFolderHash()
+    {
+        if (!$this->formDataHandler->getFormValue('uploadFolderHash')) {
+            $randomString = rand(0, 100000).'--'.time();
             $randomHash = md5($randomString);
             $this->formDataHandler->setFormValue('uploadFolderHash', $randomHash);
         }
@@ -181,7 +192,8 @@ class FileUploadInterceptor extends AbstractInterceptor {
      * add validation error
      * @param string $validationCode
      */
-    private function addFileErrorToValidationErrors($validationCode) {
+    private function addFileErrorToValidationErrors($validationCode)
+    {
         $validationError = new \CosmoCode\SimpleForm\Utility\Validation\ValidationError();
         $validationError->setFormField($this->currentFileConfiguration['formName']);
         $validationError->setValidationCode($validationCode);
@@ -194,12 +206,12 @@ class FileUploadInterceptor extends AbstractInterceptor {
      * @param string $nameType
      * @return mixed
      */
-    private function getFileNameFromFiles($nameType) {
+    private function getFileNameFromFiles($nameType)
+    {
         $fileName = $_FILES['tx_simpleform_simpleform'][$nameType];
-        foreach($this->currentUploadField as $fieldName) {
+        foreach ($this->currentUploadField as $fieldName) {
             $fileName = $fileName[$fieldName];
         }
         return $fileName;
     }
 }
-?>

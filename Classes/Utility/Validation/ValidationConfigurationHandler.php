@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class ValidationConfigurationHandler implements \TYPO3\CMS\Core\SingletonInterface {
+class ValidationConfigurationHandler implements \TYPO3\CMS\Core\SingletonInterface
+{
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Form\StepHandler
@@ -45,26 +46,29 @@ class ValidationConfigurationHandler implements \TYPO3\CMS\Core\SingletonInterfa
      */
     private $typoScriptSettings;
 
-    public function getValidationConfigurationFromCurrentStep() {
+    public function getValidationConfigurationFromCurrentStep()
+    {
         return $this->typoScriptSettings[$this->stepHandler->getCurrentStep()]['validation'];
     }
 
-    public function getOrValidationFromCurrentStep() {
+    public function getOrValidationFromCurrentStep()
+    {
         return $this->typoScriptSettings[$this->stepHandler->getCurrentStep()]['orValidation'];
     }
 
     /**
      * @param array $typoScriptSettings
      */
-    public function setTypoScriptSettings($typoScriptSettings) {
+    public function setTypoScriptSettings($typoScriptSettings)
+    {
         $this->typoScriptSettings = $typoScriptSettings;
     }
 
     /**
      * @return array
      */
-    public function getTypoScriptSettings() {
+    public function getTypoScriptSettings()
+    {
         return $this->typoScriptSettings;
     }
 }
-?>

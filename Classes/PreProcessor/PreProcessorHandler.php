@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\PreProcessor;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class PreProcessorHandler implements \TYPO3\CMS\Core\SingletonInterface {
+class PreProcessorHandler implements \TYPO3\CMS\Core\SingletonInterface
+{
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
@@ -54,17 +55,17 @@ class PreProcessorHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * create preProcessors
      * TODO: write log if exception appears
      */
-    public function createPreProcessorsFromPreProcessorsConfiguration() {
+    public function createPreProcessorsFromPreProcessorsConfiguration()
+    {
         $this->resetPreProcessors();
-        if(is_array($this->preProcessorsConfiguration)) {
-            foreach($this->preProcessorsConfiguration as $singlePreProcessorConfiguration) {
+        if (is_array($this->preProcessorsConfiguration)) {
+            foreach ($this->preProcessorsConfiguration as $singlePreProcessorConfiguration) {
                 /** @var $preProcessor AbstractPreProcessor */
                 try {
                     $preProcessor = $this->objectManager->get($singlePreProcessorConfiguration['preProcessor']);
                     $preProcessor->setPreProcessorConfiguration($singlePreProcessorConfiguration['conf']);
                     $this->preProcessors[] = $preProcessor;
-                } catch(\Exception $exception) {
-
+                } catch (\Exception $exception) {
                 }
             }
         }
@@ -73,11 +74,12 @@ class PreProcessorHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * call finish function of all configured preProcessors
      */
-    public function callAllPreProcessors() {
-        if(empty($this->preProcessors)) {
+    public function callAllPreProcessors()
+    {
+        if (empty($this->preProcessors)) {
             return 0;
         }
-        foreach($this->preProcessors as $preProcessor) {
+        foreach ($this->preProcessors as $preProcessor) {
             /** @var $preProcessor AbstractPreProcessor */
             $preProcessor->preProcess();
         }
@@ -86,20 +88,21 @@ class PreProcessorHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @param array $preProcessorsConfiguration
      */
-    public function setPreProcessorsConfiguration($preProcessorsConfiguration) {
+    public function setPreProcessorsConfiguration($preProcessorsConfiguration)
+    {
         $this->preProcessorsConfiguration = $preProcessorsConfiguration;
     }
 
     /**
      * @return array
      */
-    public function getPreProcessorsConfiguration() {
+    public function getPreProcessorsConfiguration()
+    {
         return $this->preProcessorsConfiguration;
     }
 
-    private function resetPreProcessors() {
+    private function resetPreProcessors()
+    {
         $this->preProcessors = array();
     }
-
 }
-?>

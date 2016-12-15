@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Finisher;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class FinisherHandler implements \TYPO3\CMS\Core\SingletonInterface {
+class FinisherHandler implements \TYPO3\CMS\Core\SingletonInterface
+{
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
@@ -54,17 +55,17 @@ class FinisherHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * create finishers
      * TODO: write log if exception appears
      */
-    public function createFinishersFromFinishersConfiguration() {
+    public function createFinishersFromFinishersConfiguration()
+    {
         $this->resetFinishers();
         if ($this->finishersConfiguration) {
-            foreach($this->finishersConfiguration as $singleFinisherConfiguration) {
+            foreach ($this->finishersConfiguration as $singleFinisherConfiguration) {
                 /** @var $finisher AbstractFinisher */
                 try {
                     $finisher = $this->objectManager->get($singleFinisherConfiguration['finisher']);
                     $finisher->setFinisherConfiguration($singleFinisherConfiguration['conf']);
                     $this->finishers[] = $finisher;
-                } catch(\Exception $exception) {
-
+                } catch (\Exception $exception) {
                 }
             }
         }
@@ -73,11 +74,12 @@ class FinisherHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * call finish function of all configured finishers
      */
-    public function callAllFinishers() {
-        if(empty($this->finishers)) {
+    public function callAllFinishers()
+    {
+        if (empty($this->finishers)) {
             return 0;
         }
-        foreach($this->finishers as $finisher) {
+        foreach ($this->finishers as $finisher) {
             /** @var $finisher AbstractFinisher */
             $finisher->finish();
         }
@@ -86,19 +88,21 @@ class FinisherHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @param array $finishersConfiguration
      */
-    public function setFinishersConfiguration($finishersConfiguration) {
+    public function setFinishersConfiguration($finishersConfiguration)
+    {
         $this->finishersConfiguration = $finishersConfiguration;
     }
 
     /**
      * @return array
      */
-    public function getFinishersConfiguration() {
+    public function getFinishersConfiguration()
+    {
         return $this->finishersConfiguration;
     }
 
-    private function resetFinishers() {
+    private function resetFinishers()
+    {
         $this->finishers = array();
     }
 }
-?>

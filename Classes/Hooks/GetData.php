@@ -12,7 +12,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @author Tilo Baller <baller@cosmocode.de>
  */
-class GetData implements \TYPO3\CMS\Frontend\ContentObject\ContentObjectGetDataHookInterface {
+class GetData implements \TYPO3\CMS\Frontend\ContentObject\ContentObjectGetDataHookInterface
+{
 
     /**
      * Extends the getData()-Method of \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer to process more/other commands

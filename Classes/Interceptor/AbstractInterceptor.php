@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Interceptor;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-abstract class AbstractInterceptor {
+abstract class AbstractInterceptor
+{
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Validation\ValidationErrorHandler
@@ -68,7 +69,8 @@ abstract class AbstractInterceptor {
     /**
      * @param array $interceptorConfiguration
      */
-    public function setInterceptorConfiguration($interceptorConfiguration) {
+    public function setInterceptorConfiguration($interceptorConfiguration)
+    {
         if (isset($interceptorConfiguration['enableTypoScriptProcessing'])
             && $interceptorConfiguration['enableTypoScriptProcessing'] === '1'
         ) {
@@ -81,8 +83,8 @@ abstract class AbstractInterceptor {
     /**
      * @return array
      */
-    public function getInterceptorConfiguration() {
+    public function getInterceptorConfiguration()
+    {
         return $this->interceptorConfiguration;
     }
 }
-?>

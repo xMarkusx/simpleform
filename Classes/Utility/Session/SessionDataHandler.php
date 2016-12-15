@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Session;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class SessionDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
+class SessionDataHandler implements \TYPO3\CMS\Core\SingletonInterface
+{
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Session\SessionHandler
@@ -49,7 +50,8 @@ class SessionDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @param array $formData
      */
-    public function storeFormDataFromCurrentStep($formData) {
+    public function storeFormDataFromCurrentStep($formData)
+    {
         $currentFormData = $this->sessionHandler->restoreFromSession();
         $currentFormData[$this->stepHandler->getCurrentStep()] = $formData;
         $this->sessionHandler->storeSessionData($currentFormData);
@@ -59,9 +61,10 @@ class SessionDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * @param array $formData
      * @param string $step
      */
-    public function storeFormDataFromStep($formData, $step) {
+    public function storeFormDataFromStep($formData, $step)
+    {
         $currentFormData = $this->sessionHandler->restoreFromSession();
-        if($this->stepHandler->checkIfStepIsValid($step)) {
+        if ($this->stepHandler->checkIfStepIsValid($step)) {
             $currentFormData[$step] = $formData;
             $this->sessionHandler->storeSessionData($currentFormData);
         }
@@ -70,7 +73,8 @@ class SessionDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @return mixed
      */
-    public function getFormDataFromCurrentStep() {
+    public function getFormDataFromCurrentStep()
+    {
         $currentFormData = $this->sessionHandler->restoreFromSession();
         return $currentFormData[$this->stepHandler->getCurrentStep()];
     }
@@ -79,7 +83,8 @@ class SessionDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * @param $step
      * @return mixed
      */
-    public function getFormDataFromStep($step) {
+    public function getFormDataFromStep($step)
+    {
         $currentFormData = $this->sessionHandler->restoreFromSession();
         return $currentFormData[$step];
     }
@@ -87,8 +92,8 @@ class SessionDataHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @return mixed
      */
-    public function getFormData() {
+    public function getFormData()
+    {
         return $this->sessionHandler->restoreFromSession();
     }
 }
-?>

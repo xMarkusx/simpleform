@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Finisher;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class RedirectFinisher extends AbstractFinisher {
+class RedirectFinisher extends AbstractFinisher
+{
 
     /**
      * @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder
@@ -40,15 +41,16 @@ class RedirectFinisher extends AbstractFinisher {
      */
     protected $uriBuilder;
 
-    public function finish() {
-        if(array_key_exists('redirectPage', $this->finisherConfiguration)) {
+    public function finish()
+    {
+        if (array_key_exists('redirectPage', $this->finisherConfiguration)) {
             $redirectPage = $this->finisherConfiguration['redirectPage'];
             $this->uriBuilder->setTargetPageUid($redirectPage);
-            if(is_array($this->finisherConfiguration['arguments'])) {
+            if (is_array($this->finisherConfiguration['arguments'])) {
                 $this->uriBuilder->setArguments($this->finisherConfiguration['arguments']);
             }
             $link = $this->uriBuilder->build();
-            if($this->finisherConfiguration['clearSessionDataWhenFinished'] === '1') {
+            if ($this->finisherConfiguration['clearSessionDataWhenFinished'] === '1') {
                 $this->sessionHandler->clearSessionData();
             }
             $persistenceManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager');
@@ -57,4 +59,3 @@ class RedirectFinisher extends AbstractFinisher {
         }
     }
 }
-?>

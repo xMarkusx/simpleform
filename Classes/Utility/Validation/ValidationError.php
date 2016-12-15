@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class ValidationError {
+class ValidationError
+{
 
     /**
      * @var string
@@ -67,85 +68,96 @@ class ValidationError {
     /**
      * @param mixed $formField
      */
-    public function setFormField($formField) {
+    public function setFormField($formField)
+    {
         $this->formField = $formField;
     }
 
     /**
      * @return mixed
      */
-    public function getFormField() {
+    public function getFormField()
+    {
         return $this->formField;
     }
 
     /**
      * @param mixed $formValue
      */
-    public function setFormValue($formValue) {
+    public function setFormValue($formValue)
+    {
         $this->formValue = $formValue;
     }
 
     /**
      * @return mixed
      */
-    public function getFormValue() {
+    public function getFormValue()
+    {
         return $this->formValue;
     }
 
     /**
      * @param string $validationCode
      */
-    public function setValidationCode($validationCode) {
+    public function setValidationCode($validationCode)
+    {
         $this->validationCode = $validationCode;
     }
 
     /**
      * @return string
      */
-    public function getValidationCode() {
+    public function getValidationCode()
+    {
         return $this->validationCode;
     }
 
     /**
      * @param string $customErrorText
      */
-    public function setCustomErrorText($customErrorText) {
+    public function setCustomErrorText($customErrorText)
+    {
         $this->customErrorText = $customErrorText;
     }
 
     /**
      * @return string
      */
-    public function getCustomErrorText() {
+    public function getCustomErrorText()
+    {
         return $this->customErrorText;
     }
 
     /**
      * @return string
      */
-    public function getEachFieldName() {
+    public function getEachFieldName()
+    {
         return $this->eachFieldName;
     }
 
     /**
      * @param string $eachFieldName
      */
-    public function setEachFieldName($eachFieldName) {
+    public function setEachFieldName($eachFieldName)
+    {
         $this->eachFieldName = $eachFieldName;
     }
 
     /**
      * @return string
      */
-    public function getEachIndex() {
+    public function getEachIndex()
+    {
         return $this->eachIndex;
     }
 
     /**
      * @param string $eachIndex
      */
-    public function setEachIndex($eachIndex) {
+    public function setEachIndex($eachIndex)
+    {
         $this->eachIndex = $eachIndex;
     }
 }
-?>

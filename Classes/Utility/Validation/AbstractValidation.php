@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Utility\Validation;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-abstract class AbstractValidation {
+abstract class AbstractValidation
+{
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
@@ -64,7 +65,8 @@ abstract class AbstractValidation {
      * @param mixed $value
      * @return bool
      */
-    public function checkValue($value) {
+    public function checkValue($value)
+    {
         $this->value = $value;
         return $this->validate();
     }
@@ -82,42 +84,48 @@ abstract class AbstractValidation {
     /**
      * @param array $conf
      */
-    public function setConf($conf) {
+    public function setConf($conf)
+    {
         $this->conf = $conf;
     }
 
     /**
      * @return array
      */
-    public function getConf() {
+    public function getConf()
+    {
         return $this->conf;
     }
 
     /**
      * @return string
      */
-    public function getEachFieldName() {
+    public function getEachFieldName()
+    {
         return $this->eachFieldName;
     }
 
     /**
      * @param string $eachFieldName
      */
-    public function setEachFieldName($eachFieldName) {
+    public function setEachFieldName($eachFieldName)
+    {
         $this->eachFieldName = $eachFieldName;
     }
 
     /**
      * @return string
      */
-    public function getEachIndex() {
+    public function getEachIndex()
+    {
         return $this->eachIndex;
     }
 
     /**
      * @param string $eachIndex
      */
-    public function setEachIndex($eachIndex) {
+    public function setEachIndex($eachIndex)
+    {
         $this->eachIndex = $eachIndex;
     }
 
@@ -125,11 +133,11 @@ abstract class AbstractValidation {
      * Check if Validation is called in an each-loop
      * @return bool
      */
-    public function isCalledInEachLoop() {
-        if(!empty($this->eachFieldName) && !empty($this->eachIndex)) {
-            return TRUE;
+    public function isCalledInEachLoop()
+    {
+        if (!empty($this->eachFieldName) && !empty($this->eachIndex)) {
+            return true;
         }
-        return FALSE;
+        return false;
     }
 }
-?>

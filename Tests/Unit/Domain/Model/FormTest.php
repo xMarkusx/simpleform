@@ -1,6 +1,7 @@
 <?php
 
 namespace CosmoCode\SimpleForm\Tests;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -37,26 +38,28 @@ namespace CosmoCode\SimpleForm\Tests;
  *
  * @author Markus Baumann <baumann@cosmocode.de>
  */
-class FormTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
-	/**
-	 * @var \CosmoCode\SimpleForm\Domain\Model\Form
-	 */
-	protected $fixture;
+class FormTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase
+{
+    /**
+     * @var \CosmoCode\SimpleForm\Domain\Model\Form
+     */
+    protected $fixture;
 
-	public function setUp() {
-		$this->fixture = new \CosmoCode\SimpleForm\Domain\Model\Form();
-	}
+    public function setUp()
+    {
+        $this->fixture = new \CosmoCode\SimpleForm\Domain\Model\Form();
+    }
 
-	public function tearDown() {
-		unset($this->fixture);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function dummyTestToNotLeaveThisFileEmpty() {
-		$this->markTestIncomplete();
-	}
-	
+    public function tearDown()
+    {
+        unset($this->fixture);
+    }
+    
+    /**
+     * @test
+     */
+    public function dummyTestToNotLeaveThisFileEmpty()
+    {
+        $this->markTestIncomplete();
+    }
 }
-?>

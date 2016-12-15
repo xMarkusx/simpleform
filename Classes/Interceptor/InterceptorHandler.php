@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Interceptor;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface {
+class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface
+{
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
@@ -54,17 +55,17 @@ class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface {
      * create interceptors
      * TODO: write log if exception appears
      */
-    public function createInterceptorsFromInterceptorsConfiguration() {
+    public function createInterceptorsFromInterceptorsConfiguration()
+    {
         $this->resetInterceptors();
-        if(is_array($this->interceptorsConfiguration)) {
-            foreach($this->interceptorsConfiguration as $singleInterceptorConfiguration) {
+        if (is_array($this->interceptorsConfiguration)) {
+            foreach ($this->interceptorsConfiguration as $singleInterceptorConfiguration) {
                 /** @var $interceptor AbstractInterceptor */
                 try {
                     $interceptor = $this->objectManager->get($singleInterceptorConfiguration['interceptor']);
                     $interceptor->setInterceptorConfiguration($singleInterceptorConfiguration['conf']);
                     $this->interceptors[] = $interceptor;
-                } catch(\Exception $exception) {
-
+                } catch (\Exception $exception) {
                 }
             }
         }
@@ -73,11 +74,12 @@ class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * call finish function of all configured interceptors
      */
-    public function callAllInterceptors() {
-        if(empty($this->interceptors)) {
+    public function callAllInterceptors()
+    {
+        if (empty($this->interceptors)) {
             return 0;
         }
-        foreach($this->interceptors as $interceptor) {
+        foreach ($this->interceptors as $interceptor) {
             /** @var $interceptor AbstractInterceptor */
             $interceptor->intercept();
         }
@@ -86,19 +88,21 @@ class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @param array $interceptorsConfiguration
      */
-    public function setInterceptorsConfiguration($interceptorsConfiguration) {
+    public function setInterceptorsConfiguration($interceptorsConfiguration)
+    {
         $this->interceptorsConfiguration = $interceptorsConfiguration;
     }
 
     /**
      * @return array
      */
-    public function getInterceptorsConfiguration() {
+    public function getInterceptorsConfiguration()
+    {
         return $this->interceptorsConfiguration;
     }
 
-        private function resetInterceptors() {
+    private function resetInterceptors()
+    {
         $this->interceptors = array();
     }
 }
-?>

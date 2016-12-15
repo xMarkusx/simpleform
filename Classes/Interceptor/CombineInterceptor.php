@@ -30,7 +30,8 @@ namespace CosmoCode\SimpleForm\Interceptor;
  * @package CosmoCode\SimpleForm\Interceptor
  *
  */
-class CombineInterceptor extends \CosmoCode\SimpleForm\Interceptor\AbstractInterceptor {
+class CombineInterceptor extends \CosmoCode\SimpleForm\Interceptor\AbstractInterceptor
+{
 
     /**
      * Parameters:
@@ -55,7 +56,8 @@ class CombineInterceptor extends \CosmoCode\SimpleForm\Interceptor\AbstractInter
      * }
      *
      */
-    public function intercept() {
+    public function intercept()
+    {
         $typoScript = $this->getInterceptorConfiguration();
 
         $combinedString = '';

@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\PreProcessor;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-abstract class AbstractPreProcessor {
+abstract class AbstractPreProcessor
+{
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
@@ -62,7 +63,8 @@ abstract class AbstractPreProcessor {
     /**
      * @param array $preProcessorConfiguration
      */
-    public function setPreProcessorConfiguration($preProcessorConfiguration) {
+    public function setPreProcessorConfiguration($preProcessorConfiguration)
+    {
         if (isset($preProcessorConfiguration['enableTypoScriptProcessing'])
             && $preProcessorConfiguration['enableTypoScriptProcessing'] === '1'
         ) {
@@ -75,8 +77,8 @@ abstract class AbstractPreProcessor {
     /**
      * @return array
      */
-    public function getPreProcessorConfiguration() {
+    public function getPreProcessorConfiguration()
+    {
         return $this->preProcessorConfiguration;
     }
 }
-?>

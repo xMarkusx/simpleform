@@ -32,7 +32,8 @@ namespace CosmoCode\SimpleForm\Finisher;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-abstract class AbstractFinisher {
+abstract class AbstractFinisher
+{
 
     /**
      * @var \CosmoCode\SimpleForm\Utility\Form\FormDataHandler
@@ -62,7 +63,8 @@ abstract class AbstractFinisher {
     /**
      * @param array $finisherConfiguration
      */
-    public function setFinisherConfiguration($finisherConfiguration) {
+    public function setFinisherConfiguration($finisherConfiguration)
+    {
         if (isset($finisherConfiguration['enableTypoScriptProcessing'])
             && $finisherConfiguration['enableTypoScriptProcessing'] === '1'
         ) {
@@ -75,8 +77,8 @@ abstract class AbstractFinisher {
     /**
      * @return array
      */
-    public function getFinisherConfiguration() {
+    public function getFinisherConfiguration()
+    {
         return $this->finisherConfiguration;
     }
 }
-?>
