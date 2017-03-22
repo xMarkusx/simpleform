@@ -96,6 +96,12 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private $preProcessorHandler;
 
     /**
+     * @var \CosmoCode\SimpleForm\VariableInjector\VariableInjectorHandler
+     * @inject
+     */
+    private $variableInjectorHandler;
+
+    /**
      * @var \CosmoCode\SimpleForm\Utility\Security\CsrfProtection
      * @inject
      */
@@ -114,6 +120,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->initializeInterceptorHandler();
         $this->initializeFinisherHandler();
         $this->initializePreProcessorHandler();
+        $this->initializeVariableInjectorHandler();
         if (array_key_exists('activateCsrfProtection', $this->settings) && $this->settings['activateCsrfProtection'] === '1') {
             $this->initializeCsrfProtection();
         }
@@ -189,6 +196,15 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
+     * initialize VariableInjectorHandler
+     */
+    private function initializeVariableInjectorHandler()
+    {
+        $this->variableInjectorHandler->setVariableInjectorsConfiguration($this->settings[$this->stepHandler->getCurrentStep()]['variableInjectors']);
+        $this->variableInjectorHandler->createVariableInjectorsFromVariableInjectorsConfiguration();
+    }
+
+    /**
      * initialize Csrf Protection
      */
     private function initializeCsrfProtection()
@@ -212,6 +228,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             if ($step && !$simulateSubmit) {
                 $this->stepHandler->setCurrentStep($step);
                 $this->preProcessorHandler->callAllPreProcessors();
+                $this->variableInjectorHandler->callAllVariableInjectors();
                 $this->stayOnCurrentStep();
             } elseif ($this->formDataHandler->formDataExists()) {
                 if (!$this->csrfProtection->validateCsrfToken()) {
@@ -226,10 +243,12 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 $this->validate();
             } else {
                 $this->preProcessorHandler->callAllPreProcessors();
+                $this->variableInjectorHandler->callAllVariableInjectors();
                 $this->stayOnCurrentStep();
             }
         } else {
             $this->preProcessorHandler->callAllPreProcessors();
+            $this->variableInjectorHandler->callAllVariableInjectors();
             $this->stayOnCurrentStep();
         }
         $this->view->assign('stepHandler', $this->stepHandler);
