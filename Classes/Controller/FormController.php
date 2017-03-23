@@ -201,6 +201,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private function initializeVariableInjectorHandler()
     {
         $this->variableInjectorHandler->setVariableInjectorsConfiguration($this->settings[$this->stepHandler->getCurrentStep()]['variableInjectors']);
+        $this->variableInjectorHandler->setFormPluginSettings($this->settings);
         $this->variableInjectorHandler->createVariableInjectorsFromVariableInjectorsConfiguration();
     }
 
@@ -228,7 +229,8 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             if ($step && !$simulateSubmit) {
                 $this->stepHandler->setCurrentStep($step);
                 $this->preProcessorHandler->callAllPreProcessors();
-                $this->variableInjectorHandler->callAllVariableInjectors();
+
+                $this->assignAllInjectedVariables();
                 $this->stayOnCurrentStep();
             } elseif ($this->formDataHandler->formDataExists()) {
                 if (!$this->csrfProtection->validateCsrfToken()) {
@@ -243,14 +245,15 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 $this->validate();
             } else {
                 $this->preProcessorHandler->callAllPreProcessors();
-                $this->variableInjectorHandler->callAllVariableInjectors();
+                $this->assignAllInjectedVariables();
                 $this->stayOnCurrentStep();
             }
         } else {
             $this->preProcessorHandler->callAllPreProcessors();
-            $this->variableInjectorHandler->callAllVariableInjectors();
+            $this->assignAllInjectedVariables();
             $this->stayOnCurrentStep();
         }
+
         $this->view->assign('stepHandler', $this->stepHandler);
         $this->view->assign('sessionData', $this->sessionDataHandler->getFormData());
     }
@@ -366,5 +369,15 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $additionalParams[$additionalParam] = $this->request->getArgument($additionalParam);
         }
         return $additionalParams;
+    }
+
+
+    private function assignAllInjectedVariables()
+    {
+        foreach($this->variableInjectorHandler->getAllInjectedVariables() AS $injectedVariablesArray){
+            foreach($injectedVariablesArray AS $key => $value){
+                $this->view->assign($key, $value);
+            }
+        }
     }
 }

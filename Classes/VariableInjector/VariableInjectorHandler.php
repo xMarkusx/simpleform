@@ -52,18 +52,24 @@ class VariableInjectorHandler implements \TYPO3\CMS\Core\SingletonInterface
     private $variableInjectorsConfiguration;
 
     /**
+     * @var array
+     */
+    private $formPluginSettings;
+
+    /**
      * create variableInjectors
      * TODO: write log if exception appears
      */
     public function createVariableInjectorsFromVariableInjectorsConfiguration()
     {
-        $this->resetPreProcessors();
+        $this->resetVariableInjectors();
         if (is_array($this->variableInjectorsConfiguration)) {
             foreach ($this->variableInjectorsConfiguration as $singleVariableInjectorConfiguration) {
                 /** @var $variableInjector AbstractVariableInjector */
                 try {
                     $variableInjector = $this->objectManager->get($singleVariableInjectorConfiguration['variableInjector']);
                     $variableInjector->setVariableInjectorConfiguration($singleVariableInjectorConfiguration['conf']);
+                    $variableInjector->setFormPluginSettings($this->formPluginSettings);
                     $this->variableInjectors[] = $variableInjector;
                 } catch (\Exception $exception) {
                 }
@@ -74,15 +80,21 @@ class VariableInjectorHandler implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * call finish function of all configured preProcessors
      */
-    public function callAllVariableInjectors()
+    public function getAllInjectedVariables()
     {
         if (empty($this->variableInjectors)) {
             return 0;
         }
+
+        $allInjectedVariables = [];
+
         foreach ($this->variableInjectors as $variableInjector) {
             /** @var $variableInjector AbstractVariableInjector */
-            $variableInjector->injectVariable();
+            $allInjectedVariables[] = $variableInjector->getInjectVariables();
         }
+
+        return $allInjectedVariables;
+
     }
 
     /**
@@ -100,6 +112,26 @@ class VariableInjectorHandler implements \TYPO3\CMS\Core\SingletonInterface
     {
         return $this->variableInjectorsConfiguration;
     }
+
+    /**
+     * pass complete settings (and especially flexform-values)
+     *
+     * @param array $formPluginSettings
+     */
+    public function setFormPluginSettings($formPluginSettings)
+    {
+        $this->formPluginSettings = $formPluginSettings;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormPluginSettings()
+    {
+        return $this->formPluginSettings;
+    }
+
+
 
     private function resetVariableInjectors()
     {

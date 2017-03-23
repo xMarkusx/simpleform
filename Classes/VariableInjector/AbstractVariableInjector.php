@@ -40,10 +40,19 @@ abstract class AbstractVariableInjector
      */
     protected $variableInjectorConfiguration;
 
+
     /**
-     * @return array
+     * @var array
      */
-    abstract public function injectVariable(
+    private $formPluginSettings;
+
+
+    /**
+     * all variables in associative array get assigned into view
+     *
+     * @return array associative array
+     */
+    abstract public function getInjectVariables(
     );
 
     /**
@@ -66,6 +75,22 @@ abstract class AbstractVariableInjector
     public function getVariableInjectorConfiguration()
     {
         return $this->variableInjectorConfiguration;
+    }
+
+    /**
+     * @param array $formPluginSettings
+     */
+    public function setFormPluginSettings($formPluginSettings)
+    {
+        $this->formPluginSettings = $formPluginSettings;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormPluginSettings()
+    {
+        return $this->formPluginSettings;
     }
 
 
