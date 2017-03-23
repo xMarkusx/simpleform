@@ -83,7 +83,7 @@ class VariableInjectorHandler implements \TYPO3\CMS\Core\SingletonInterface
     public function getAllInjectedVariables()
     {
         if (empty($this->variableInjectors)) {
-            return 0;
+            return array();
         }
 
         $allInjectedVariables = [];
