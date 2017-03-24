@@ -56,6 +56,12 @@ abstract class AbstractPreProcessor
     /**
      * @var array
      */
+    private $formPluginSettings;
+
+
+    /**
+     * @var array
+     */
     protected $preProcessorConfiguration;
 
     abstract public function preProcess();
@@ -81,4 +87,21 @@ abstract class AbstractPreProcessor
     {
         return $this->preProcessorConfiguration;
     }
+
+    /**
+     * @param array $formPluginSettings
+     */
+    public function setFormPluginSettings($formPluginSettings)
+    {
+        $this->formPluginSettings = $formPluginSettings;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormPluginSettings()
+    {
+        return $this->formPluginSettings;
+    }
+
 }

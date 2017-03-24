@@ -174,6 +174,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private function initializeInterceptorHandler()
     {
         $this->interceptorHandler->setInterceptorsConfiguration($this->settings[$this->stepHandler->getCurrentStep()]['interceptors']);
+        $this->interceptorHandler->setFormPluginSettings($this->settings);
         $this->interceptorHandler->createInterceptorsFromInterceptorsConfiguration();
     }
 
@@ -192,6 +193,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     private function initializePreProcessorHandler()
     {
         $this->preProcessorHandler->setPreProcessorsConfiguration($this->settings[$this->stepHandler->getCurrentStep()]['preProcessors']);
+        $this->preProcessorHandler->setFormPluginSettings($this->settings);
         $this->preProcessorHandler->createPreProcessorsFromPreProcessorsConfiguration();
     }
 
