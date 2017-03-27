@@ -321,6 +321,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->view->assign('formData', $this->formDataHandler->getFormDataFromCurrentStep());
         $this->view->assign('validationErrors', $this->validationErrorHandler->getValidationErrorsFromCurrentStep());
         $this->view->assign('token', $this->csrfProtection->generateCsrfToken());
+        $this->assignAllInjectedVariables();
     }
 
     /**
