@@ -52,6 +52,11 @@ class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface
     private $interceptorsConfiguration;
 
     /**
+     * @var array
+     */
+    private $formPluginSettings;
+
+    /**
      * create interceptors
      * TODO: write log if exception appears
      */
@@ -64,6 +69,7 @@ class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface
                 try {
                     $interceptor = $this->objectManager->get($singleInterceptorConfiguration['interceptor']);
                     $interceptor->setInterceptorConfiguration($singleInterceptorConfiguration['conf']);
+                    $interceptor->setFormPluginSettings($this->formPluginSettings);
                     $this->interceptors[] = $interceptor;
                 } catch (\Exception $exception) {
                 }
@@ -99,6 +105,24 @@ class InterceptorHandler implements \TYPO3\CMS\Core\SingletonInterface
     public function getInterceptorsConfiguration()
     {
         return $this->interceptorsConfiguration;
+    }
+
+    /**
+     * pass complete settings (and especially flexform-values)
+     *
+     * @param array $formPluginSettings
+     */
+    public function setFormPluginSettings($formPluginSettings)
+    {
+        $this->formPluginSettings = $formPluginSettings;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormPluginSettings()
+    {
+        return $this->formPluginSettings;
     }
 
     private function resetInterceptors()

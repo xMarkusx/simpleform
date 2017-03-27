@@ -52,6 +52,11 @@ class PreProcessorHandler implements \TYPO3\CMS\Core\SingletonInterface
     private $preProcessorsConfiguration;
 
     /**
+     * @var array
+     */
+    private $formPluginSettings;
+
+    /**
      * create preProcessors
      * TODO: write log if exception appears
      */
@@ -64,6 +69,7 @@ class PreProcessorHandler implements \TYPO3\CMS\Core\SingletonInterface
                 try {
                     $preProcessor = $this->objectManager->get($singlePreProcessorConfiguration['preProcessor']);
                     $preProcessor->setPreProcessorConfiguration($singlePreProcessorConfiguration['conf']);
+                    $preProcessor->setFormPluginSettings($this->formPluginSettings);
                     $this->preProcessors[] = $preProcessor;
                 } catch (\Exception $exception) {
                 }
@@ -99,6 +105,24 @@ class PreProcessorHandler implements \TYPO3\CMS\Core\SingletonInterface
     public function getPreProcessorsConfiguration()
     {
         return $this->preProcessorsConfiguration;
+    }
+
+    /**
+     * pass complete settings (and especially flexform-values)
+     *
+     * @param array $formPluginSettings
+     */
+    public function setFormPluginSettings($formPluginSettings)
+    {
+        $this->formPluginSettings = $formPluginSettings;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormPluginSettings()
+    {
+        return $this->formPluginSettings;
     }
 
     private function resetPreProcessors()

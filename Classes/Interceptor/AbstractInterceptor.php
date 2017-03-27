@@ -64,6 +64,12 @@ abstract class AbstractInterceptor
      */
     protected $stepHandler;
 
+    /**
+     * @var array
+     */
+    private $formPluginSettings;
+
+
     abstract public function intercept();
 
     /**
@@ -86,5 +92,21 @@ abstract class AbstractInterceptor
     public function getInterceptorConfiguration()
     {
         return $this->interceptorConfiguration;
+    }
+
+    /**
+     * @param array $formPluginSettings
+     */
+    public function setFormPluginSettings($formPluginSettings)
+    {
+        $this->formPluginSettings = $formPluginSettings;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormPluginSettings()
+    {
+        return $this->formPluginSettings;
     }
 }
