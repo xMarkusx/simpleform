@@ -366,7 +366,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected function getAdditionalParams()
     {
         $additionalParams = array();
-        if(!count($this->settings['additionalParams'])){
+        if(is_array($this->settings['additionalParams']) && !count($this->settings['additionalParams'])){
             return $additionalParams;
         }
         foreach ($this->settings['additionalParams'] as $additionalParam) {
