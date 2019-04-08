@@ -25,6 +25,9 @@ namespace CosmoCode\SimpleForm\Utility\Security;
      *  This copyright notice MUST APPEAR in all copies of the script!
      ***************************************************************/
 
+use TYPO3\CMS\Core\Crypto\Random;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  *
  * @package simple_form
@@ -55,7 +58,7 @@ class CsrfProtection
      */
     public function generateCsrfToken()
     {
-        $token = sha1($this->secret . time() . \TYPO3\CMS\Core\Utility\GeneralUtility::generateRandomBytes(20));
+        $token = sha1($this->secret . time() . GeneralUtility::makeInstance(Random::class)->generateRandomBytes(20));
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'token', $token);
         return $token;
     }
