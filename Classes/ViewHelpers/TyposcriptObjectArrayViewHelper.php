@@ -31,14 +31,19 @@ namespace CosmoCode\SimpleForm\ViewHelpers;
 class TyposcriptObjectArrayViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('string', 'string', '', true);
+    }
+
     /**
-     * @param string $string
      * @return array
      */
-    public function render($string)
+    public function render()
     {
         $output = array();
-        $items = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $string);
+        $items = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->arguments['string']);
         foreach ($items as $item) {
             $keyValue = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(':', $item);
             $output[$keyValue[0]] = $keyValue[1];

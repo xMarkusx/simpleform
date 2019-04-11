@@ -10,7 +10,8 @@ $typeName = 'typoscript_object';
         'LLL:EXT:simple_form/Resources/Private/Language/locallang_db.xlf:typoscript_object',
         $typeName
     ),
-    'CType'
+    'CType',
+    $_EXTKEY
 );
 
 $columnArray = array(
